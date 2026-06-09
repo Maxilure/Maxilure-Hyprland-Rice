@@ -146,17 +146,51 @@ info "  tint → /usr/local/bin/tint"
 WALLPAPER_REPO="https://github.com/orangci/walls-catppuccin-mocha.git"
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 BLACKLIST=(
-    cat-in-clouds.png
-    dominik-mayer-10.jpg
-    flying-boat.jpg
-    fox.png
-    jellyfish.jpg
-    keyboard-2.png
-    majo-no-tabitabi.jpg
-    purple-horizon.jpg
-    sakura-aura.jpg
-    space.jpg
-    sushi.jpg
+    astronaut.png beach.jpg berries-1.jpg biking-sunset.jpg
+    black-hole.png blueberries.jpg blue-kaiju.png blueprint.png
+    bsod.png car-1.png cat-in-clouds.png cat-street.jpg
+    cat-vibin.png city-harbor.png city-on-water.jpg city.png
+    cloud-coffee.jpg coffee-shop.png compass.jpg danbo.jpg
+    dark-star.jpg degirled.png desolate-city-2.jpg desolate-city.jpg
+    dino.jpg dominik-mayer-10.jpg dominik-mayer-11.jpg dominik-mayer-12.jpg
+    dominik-mayer-13.jpg dominik-mayer-14.jpg dominik-mayer-15.jpg dominik-mayer-16.jpg
+    dominik-mayer-17.jpg dominik-mayer-18.png dominik-mayer-19.jpg dominik-mayer-1.jpg
+    dominik-mayer-20.jpg dominik-mayer-21.jpg dominik-mayer-22.jpg dominik-mayer-23.jpg
+    dominik-mayer-24.jpg dominik-mayer-25.jpg dominik-mayer-26.jpg dominik-mayer-2.jpg
+    dominik-mayer-4.jpg dominik-mayer-5.jpg dominik-mayer-6.jpg dominik-mayer-7.jpg
+    dominik-mayer-8.jpg dominik-mayer-9.jpg dragon.jpg droplets.png
+    dwarf-saber.jpg fantasy-city.jpg fight.jpg flower-branch.png
+    flower-field-2.png flower-field-3.png flower-field.jpg flowering-rain.png
+    flowers-14.jpg flowers-16.jpg flowers-17.png flowers-18.jpg
+    flowers-19.jpg flowers-20.jpg flowers-8.jpg flying-boat.jpg
+    fox.png fumo-fumo.jpg genshin-landscape.png gentlemen-sunset.png
+    gingerbread-house.jpg girl-stars.png grassy-well.jpg green-bridge.jpg
+    greenbus.jpg harbor-3.png harbor.jpg hollow.jpg
+    hollow-knight.jpg hollow-knight.png ice-cream.jpg idk-tbh.png
+    i-touch-this.jpg jellyfish.jpg jupiter.png kaiju.png
+    keyboard-2.png keyboard.png kfc.jpg kitchen.png
+    kitty.jpg kiwis.jpg knight-building.png knight-sit.png
+    knights-radiant.jpg knight-templar.jpg koishi.jpg kusuriya.png
+    lantern-light-room.png laundry.jpg lightbulbs.jpg lighthouse-2.png
+    linux-communism.jpg lovely-summer.jpg mage.jpg maji-no-tabitabi-2.jpg
+    majo-no-tabitabi.jpg map.png math.png minimalist-black-hole.png
+    mushishi.jpg my-neighbor-totoro-sunflowers.png old-computer.png one-legged-herdazian.jpg
+    orange.jpg oranges.jpg oversized-cat.jpg painting.jpg
+    painting-standing.jpg pink-clouds.jpg pistachio-tea.jpg pitstop.png
+    pixel-earth.png pixel-galaxy.png pixel-napping.png pixel-prairie.jpg
+    pixel-reading.png pizza.jpg plane-purple.png pompeii.png
+    purple-horizon.jpg railroad-cat.png road.jpg rocket-schematics.jpg
+    sakura-aura.jpg sakura-trees-over-river.jpg salty-suburban.jpg samurai.jpg
+    satellite.png shadow-shape-holo.jpeg shrimp-fried-rice.jpg soaring-off.jpg
+    space.jpg space-piano.png space.png stay-vigil-by-pndora.jpg
+    stormlight-archive.png street-4.png sunlit-ruins.png sushi.jpg
+    swirls.jpg sword.jpg tank.jpg toast.png
+    tora.jpg touhou-house.jpg touhou-lake.jpg tux-socialism.jpg
+    underwater-deep.jpg van-chilling.png vibrant-gate.png voyager-10.jpg
+    voyager-11.jpg voyager-16.jpg voyager-17.jpg voyager-18.jpg
+    voyager-1.jpg voyager-21.jpg voyager-5.jpg voyager-7.jpg
+    voyager-8.jpg wallhaven-vqoo1p.jpg wall.jpg wanderer.jpg
+    waterfall.png yohoho.jpg zuchold-archtecture.jpg
 )
 
 if [[ -d "$WALLPAPER_DIR" ]]; then
