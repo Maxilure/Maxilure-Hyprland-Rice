@@ -16,6 +16,7 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | [AGS](https://github.com/Aylur/ags) | Aylur's GTK Shell (top bar / widgets) |
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
+| [Catppuccin Wallpapers](https://github.com/orangci/walls-catppuccin-mocha) | Auto-downloaded to `~/Pictures/Wallpapers/` |
 
 ## Keybinds
 
@@ -50,6 +51,7 @@ What the script does:
 3. Backs up any existing configs in `~/.config/`
 4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,ags,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
+6. Downloads [Catppuccin Mocha wallpapers](https://github.com/orangci/walls-catppuccin-mocha) to `~/Pictures/Wallpapers/`
 
 After install, log out and back in, or reload Hyprland with `hyprctl reload`.
 

@@ -142,7 +142,24 @@ info "Installing tint..."
 sudo make -C "$SCRIPT_DIR/tint" install
 info "  tint → /usr/local/bin/tint"
 
-# ---- 9. Done ----
+# ---- 9. Download wallpapers ----
+WALLPAPER_REPO="https://github.com/orangci/walls-catppuccin-mocha.git"
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+if [[ -d "$WALLPAPER_DIR" ]]; then
+    info "Wallpapers already exist at $WALLPAPER_DIR, skipping download..."
+    info "  Delete the folder and re-run if you want to redownload."
+else
+    info "Downloading Catppuccin Mocha wallpapers..."
+    git clone --depth 1 "$WALLPAPER_REPO" /tmp/walls-catppuccin-mocha
+    mkdir -p "$WALLPAPER_DIR"
+    mv /tmp/walls-catppuccin-mocha/*.{jpg,jpeg,png} "$WALLPAPER_DIR/" 2>/dev/null
+    rm -rf /tmp/walls-catppuccin-mocha
+    count=$(ls -1 "$WALLPAPER_DIR" 2>/dev/null | wc -l)
+    info "  $count wallpapers downloaded to $WALLPAPER_DIR"
+    info "  Run 'tint random' to apply one!"
+fi
+
+# ---- 10. Done ----
 echo
 info "Installation complete!"
 info "Log out and back in, or restart Hyprland to apply."

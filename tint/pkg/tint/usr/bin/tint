@@ -7,13 +7,23 @@ ensure_config_dir() {
   mkdir -p "$CONFIG_DIR"
 }
 
-get_wallpaper_dir() {
+load_config() {
   ensure_config_dir
-  if [[ ! -f "$CONFIG_FILE" ]]; then
-    echo "No wallpaper folder set. Use 'tint set-folder <path>' first." >&2
-    exit 1
+  [[ -f "$CONFIG_FILE" ]] && source "$CONFIG_FILE"
+}
+
+config_set() {
+  ensure_config_dir
+  touch "$CONFIG_FILE"
+  if grep -q "^$1=" "$CONFIG_FILE" 2>/dev/null; then
+    sed -i "s|^$1=.*|$1=$2|" "$CONFIG_FILE"
+  else
+    echo "$1=$2" >> "$CONFIG_FILE"
   fi
-  source "$CONFIG_FILE"
+}
+
+get_wallpaper_dir() {
+  load_config
   if [[ -z "$WALLPAPER_DIR" ]]; then
     echo "No wallpaper folder set. Use 'tint set-folder <path>' first." >&2
     exit 1
@@ -31,8 +41,7 @@ cmd_set_folder() {
     echo "Error: '$dir' is not a directory." >&2
     exit 1
   fi
-  ensure_config_dir
-  echo "WALLPAPER_DIR=$dir" > "$CONFIG_FILE"
+  config_set "WALLPAPER_DIR" "$dir"
   echo "Wallpaper folder set to: $dir"
 }
 
@@ -119,7 +128,40 @@ cmd_random() {
       --transition-duration 3
   done
 
+  config_set "LAST_WALLPAPER" "$random_wallpaper"
+  config_set "LAST_EFFECT" "$effect"
+
   echo "Done."
+}
+
+cmd_current() {
+  load_config
+
+  echo "Wallpaper folder: ${WALLPAPER_DIR:-<not set>}"
+  echo ""
+
+  local query
+  query=$(awww query 2>/dev/null)
+  if [[ -n "$query" ]]; then
+    echo "Current wallpapers:"
+    while IFS= read -r line; do
+      local monitor res img
+      monitor=$(echo "$line" | sed -n 's/^: \([^:]*\):.*/\1/p')
+      res=$(echo "$line" | grep -oP '\d+x\d+' | head -1)
+      img=$(echo "$line" | grep -oP 'image: \K.*')
+      if [[ -n "$monitor" ]]; then
+        printf "  %-12s %s\n" "$monitor" "$res"
+        printf "  %-12s %s\n" "" "${img:-<unknown>}"
+      fi
+    done <<< "$query"
+  else
+    echo "awww is not running — no wallpaper info available."
+  fi
+
+  echo ""
+  echo "Last applied:"
+  echo "  Wallpaper: ${LAST_WALLPAPER:-<none>}"
+  echo "  Effect:    ${LAST_EFFECT:-<none>}"
 }
 
 cmd_help_random() {
@@ -155,6 +197,7 @@ Usage: tint <command>
 Commands:
   set-folder <path>   Set the wallpaper directory
   random <monitors> <effect>   Apply random wallpaper to monitor(s) with effect
+  current             Show current wallpaper info and last applied effect
   help                Show this help message
 
 Run 'tint help random' for detailed help on the random command.
@@ -171,6 +214,9 @@ main() {
     random)
       shift
       cmd_random "$@"
+      ;;
+    current)
+      cmd_current
       ;;
     help|--help|-h)
       if [[ "$2" == "random" ]]; then
