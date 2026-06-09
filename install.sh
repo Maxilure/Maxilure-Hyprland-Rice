@@ -76,6 +76,8 @@ echo "  [official repos]"
 
 pacman_install kitty
 pacman_install fastfetch
+pacman_install ttf-jetbrains-mono-nerd
+pacman_install adwaita-fonts
 pacman_install rofimoji
 pacman_install wtype
 pacman_install python
@@ -112,6 +114,7 @@ echo "  [AUR packages]"
 aur_install aylurs-gtk-shell-git
 aur_install catppuccin-gtk-theme-mocha
 aur_install kvantum-theme-catppuccin-git
+aur_install ttf-geist
 
 # ---- 5. Backup existing configs ----
 info "Backing up existing configs..."
