@@ -1,35 +1,39 @@
 # Maxilure's Hyprland Rice
 
-A personal Hyprland dotfiles and configs setup, themed around [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
+A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, functional workflow — themed around [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
 
-## Components
+## What's Included
 
-| Component | Description |
+| Component | Role |
 |---|---|
-| **Hyprland** | Window manager — modular Lua config (hyprland.lua + sourced sub-files) |
-| **Kitty** | Terminal emulator — Catppuccin Mocha colors, JetBrainsMono Nerd Font |
-| **AGS** | Aylur's GTK Shell — custom bar/widget system (TypeScript + SCSS) |
-| **Rofi** | App launcher — Catppuccin-themed `drun` menu |
-| **RofiMoji** | Emoji picker — custom `emoji-picker.sh` wrapper, bound to `SUPER + .` |
-| **Fastfetch** | System info — custom logo + Catppuccin-accented output |
-| **Tint** | Wallpaper randomizer — picks random wallpapers with `awww` transitions |
-| **hypralt** | Alt-Tab window switcher — custom Python script |
+| [Kitty](https://sw.kovidgoyal.net/kitty/) | Terminal emulator |
+| [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info fetch |
+| [Rofi](https://github.com/davatorium/rofi) | App launcher (`rofi -show drun`) |
+| [RofiMoji](https://github.com/fdw/rofimoji) | Emoji picker (`SUPER + .`) |
+| [AGS](https://github.com/Aylur/ags) | Aylur's GTK Shell (top bar / widgets) |
+| [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
+| [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
 
-### Keybinds
+## Keybinds
 
-| Shortcut | Action |
+| Key | Action |
 |---|---|
-| `SUPER + Return` | Open Kitty |
-| `SUPER + Space` | Open Rofi (app launcher) |
-| `SUPER + .` | Open RofiMoji emoji picker |
-| `SUPER + W` | Random wallpaper via Tint |
-| `ALT + Tab` | Window switcher (hypralt) |
-| `SUPER + Q` | Close focused window |
-| `SUPER + V` | Toggle float |
-| `Print` | Screenshot (grimblast + swappy) |
+| `SUPER + Return` | Open terminal (Kitty) |
+| `SUPER + Space` | Open app launcher (Rofi) |
+| `SUPER + .` | Open emoji picker (RofiMoji) |
+| `SUPER + W` | Random wallpaper (Tint) |
+| `ALT + TAB` | Window switcher (Hypralt) |
+| `SUPER + Q` | Kill focused window |
+| `SUPER + V` | Toggle window float |
+| `SUPER + ALT + F` | Toggle fullscreen |
+| `Print` | Screenshot (area → clipboard + Swappy) |
 | `SUPER + Escape` | Kill stuck screenshot processes |
 
+See [binds.lua](hypr/binds.lua) for the full list.
+
 ## Installation
+
+> **Requires:** Arch Linux or CachyOS
 
 ```bash
 git clone https://github.com/Maxilure/Maxilure-Hyprland-Rice.git
@@ -37,44 +41,24 @@ cd Maxilure-Hyprland-Rice
 ./install.sh
 ```
 
-The script will:
+What the script does:
+1. Detects your distro (CachyOS / Arch), installs `yay`, removes `paru` if found
+2. Installs all required packages (skips already-installed ones)
+3. Backs up any existing configs in `~/.config/`
+4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,ags,hypr}`
+5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
 
-1. Detect your distro (CachyOS or Arch Linux)
-2. Install yay (AUR helper), remove paru if present
-3. Install all required packages (skips already-installed ones)
-4. Back up your existing configs to `.bak-<timestamp>`
-5. Deploy all configs to `~/.config/`
-6. Install `hypralt` to `~/.local/bin/`
-7. Install `tint` to `/usr/local/bin/`
+After install, log out and back in, or reload Hyprland with `hyprctl reload`.
 
-### Prerequisites
+Before using, add your monitors in `~/.config/hypr/monitors.lua` (it comes with a template).
 
-- **Arch Linux** or **CachyOS**
-- An existing Hyprland installation recommended (script handles dependencies)
+## Theme
 
-### Post-install
-
-- Log out and back in, or restart Hyprland
-- If already in Hyprland: `hyprctl reload`
-- Run `tint set-folder /path/to/wallpapers` to configure Tint
-- Edit `~/.config/hypr/monitors.lua` with your display setup
-
-## Manual config locations
-
-```
-~/.config/kitty/
-~/.config/fastfetch/
-~/.config/rofi/
-~/.config/ags/
-~/.config/hypr/
-~/.local/bin/hypralt
-/usr/local/bin/tint
-```
+This rice uses **Catppuccin Mocha** — a warm, low-contrast color palette. Check them out at [catppuccin.com](https://catppuccin.com/).
 
 ## Credits
 
-- [Catppuccin](https://github.com/catppuccin/catppuccin) — color scheme
-- [Hyprland](https://hyprland.org/) — Wayland compositor
+- [Hyprland](https://hyprland.org/) — the Wayland compositor
+- [Catppuccin](https://github.com/catppuccin/catppuccin) — color palette
 - [Aylur's GTK Shell](https://github.com/Aylur/ags) — widget system
-- [Rofi](https://github.com/davatorium/rofi) — app launcher
-- [RofiMoji](https://github.com/fdw/rofimoji) — emoji picker
+- [awww](https://codeberg.org/LGFae/awww) — wallpaper daemon
