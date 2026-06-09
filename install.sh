@@ -176,19 +176,35 @@ BLACKLIST=(
     majo-no-tabitabi.jpg map.png math.png minimalist-black-hole.png
     mushishi.jpg my-neighbor-totoro-sunflowers.png old-computer.png one-legged-herdazian.jpg
     orange.jpg oranges.jpg oversized-cat.jpg painting.jpg
-    painting-standing.jpg pink-clouds.jpg pistachio-tea.jpg pitstop.png
-    pixel-earth.png pixel-galaxy.png pixel-napping.png pixel-prairie.jpg
-    pixel-reading.png pizza.jpg plane-purple.png pompeii.png
-    purple-horizon.jpg railroad-cat.png road.jpg rocket-schematics.jpg
+    painting-standing.jpg pink-clouds.jpg pistachio-tea.jpg     pitstop.png
+    pixel-castle.png
+    pixel-earth.png pixel-galaxy.png     pixel-napping.png
+    pixel-planet.png pixel-prairie.jpg
+    pixel-reading.png     pizza.jpg
+    plane-purple.png
+    platform.jpg
+    pompeii.png
+    purple-horizon.jpg     railroad-cat.png
+    river-city.jpg
+    road.jpg rocket-schematics.jpg
     sakura-aura.jpg sakura-trees-over-river.jpg salty-suburban.jpg samurai.jpg
-    satellite.png shadow-shape-holo.jpeg shrimp-fried-rice.jpg soaring-off.jpg
+        satellite.png
+    scifi.jpg
+    shadow-shape-holo.jpeg shrimp-fried-rice.jpg soaring-off.jpg
     space.jpg space-piano.png space.png stay-vigil-by-pndora.jpg
-    stormlight-archive.png street-4.png sunlit-ruins.png sushi.jpg
+        stormlight-archive.png
+    street-4.png
+    subway.jpg
+    sunlit-ruins.png sushi.jpg
     swirls.jpg sword.jpg tank.jpg toast.png
     tora.jpg touhou-house.jpg touhou-lake.jpg tux-socialism.jpg
     underwater-deep.jpg van-chilling.png vibrant-gate.png voyager-10.jpg
-    voyager-11.jpg voyager-16.jpg voyager-17.jpg voyager-18.jpg
-    voyager-1.jpg voyager-21.jpg voyager-5.jpg voyager-7.jpg
+        voyager-11.jpg
+    voyager-15.jpg
+    voyager-16.jpg voyager-17.jpg voyager-18.jpg
+    voyager-1.jpg     voyager-21.jpg
+    voyager-22.jpg
+    voyager-5.jpg voyager-7.jpg
     voyager-8.jpg wallhaven-vqoo1p.jpg wall.jpg wanderer.jpg
     waterfall.png yohoho.jpg zuchold-archtecture.jpg
 )
