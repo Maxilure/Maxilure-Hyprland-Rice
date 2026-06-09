@@ -145,6 +145,15 @@ info "  tint → /usr/local/bin/tint"
 # ---- 9. Download wallpapers ----
 WALLPAPER_REPO="https://github.com/orangci/walls-catppuccin-mocha.git"
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+BLACKLIST=(
+    dominik-mayer-10.jpg
+    flying-boat.jpg
+    keyboard-2.png
+    sakura-aura.jpg
+    space.jpg
+    sushi.jpg
+)
+
 if [[ -d "$WALLPAPER_DIR" ]]; then
     info "Wallpapers already exist at $WALLPAPER_DIR, skipping download..."
     info "  Delete the folder and re-run if you want to redownload."
@@ -154,6 +163,12 @@ else
     mkdir -p "$WALLPAPER_DIR"
     mv /tmp/walls-catppuccin-mocha/*.{jpg,jpeg,png} "$WALLPAPER_DIR/" 2>/dev/null
     rm -rf /tmp/walls-catppuccin-mocha
+
+    info "  Removing blacklisted wallpapers..."
+    for file in "${BLACKLIST[@]}"; do
+        rm -f "$WALLPAPER_DIR/$file"
+    done
+
     count=$(ls -1 "$WALLPAPER_DIR" 2>/dev/null | wc -l)
     info "  $count wallpapers downloaded to $WALLPAPER_DIR"
     info "  Run 'tint random' to apply one!"

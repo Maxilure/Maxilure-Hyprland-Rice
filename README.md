@@ -51,7 +51,7 @@ What the script does:
 3. Backs up any existing configs in `~/.config/`
 4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,ags,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
-6. Downloads [Catppuccin Mocha wallpapers](https://github.com/orangci/walls-catppuccin-mocha) to `~/Pictures/Wallpapers/`
+6. Downloads [Catppuccin Mocha wallpapers](https://github.com/orangci/walls-catppuccin-mocha) to `~/Pictures/Wallpapers/` and removes blacklisted ones
 
 After install, log out and back in, or reload Hyprland with `hyprctl reload`.
 
