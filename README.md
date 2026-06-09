@@ -1,5 +1,8 @@
 # Maxilure's Hyprland Rice
 
+> **⚠️ Personal config — not intended for public use.**
+> This is my personal dotfiles archive, shared as-is. The install script modifies packages, removes `paru`, overwrites config directories, and makes other changes specific to my setup. Review it before running. Use at your own risk.
+
 A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, functional workflow — themed around [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
 
 ## What's Included
