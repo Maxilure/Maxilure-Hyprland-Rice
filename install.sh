@@ -146,9 +146,11 @@ info "  tint → /usr/local/bin/tint"
 WALLPAPER_REPO="https://github.com/orangci/walls-catppuccin-mocha.git"
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 BLACKLIST=(
+    cat-in-clouds.png
     dominik-mayer-10.jpg
     flying-boat.jpg
     fox.png
+    jellyfish.jpg
     keyboard-2.png
     sakura-aura.jpg
     space.jpg
