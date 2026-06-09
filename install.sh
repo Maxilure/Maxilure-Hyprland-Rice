@@ -235,16 +235,45 @@ else
     info "  Run 'tint random' to apply one!"
 fi
 
-# ---- 10. Set up GTK4 theme symlinks ----
+# ---- 10. Configure GTK themes ----
+THEME="catppuccin-mocha-pink-standard+default"
+
+info "Writing GTK3 settings..."
+mkdir -p "$HOME/.config/gtk-3.0"
+cat > "$HOME/.config/gtk-3.0/settings.ini" <<EOF
+[Settings]
+gtk-theme-name=$THEME
+gtk-application-prefer-dark-theme=1
+EOF
+info "  ~/.config/gtk-3.0/settings.ini"
+
+info "Writing GTK4 settings..."
+mkdir -p "$HOME/.config/gtk-4.0"
+cat > "$HOME/.config/gtk-4.0/settings.ini" <<EOF
+[Settings]
+gtk-theme-name=$THEME
+gtk-application-prefer-dark-theme=1
+EOF
+info "  ~/.config/gtk-4.0/settings.ini"
+
 info "Setting up GTK4 theme symlinks..."
 rm -rf "$HOME/.config/gtk-4.0/assets" "$HOME/.config/gtk-4.0/gtk.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
-ln -sf /usr/share/themes/catppuccin-mocha-pink-standard+default/gtk-4.0/assets "$HOME/.config/gtk-4.0/assets"
-ln -sf /usr/share/themes/catppuccin-mocha-pink-standard+default/gtk-4.0/gtk.css "$HOME/.config/gtk-4.0/gtk.css"
-ln -sf /usr/share/themes/catppuccin-mocha-pink-standard+default/gtk-4.0/gtk-dark.css "$HOME/.config/gtk-4.0/gtk-dark.css"
-info "  GTK4 symlinks set to catppuccin-mocha-pink"
+ln -sf "/usr/share/themes/$THEME/gtk-4.0/assets" "$HOME/.config/gtk-4.0/assets"
+ln -sf "/usr/share/themes/$THEME/gtk-4.0/gtk.css" "$HOME/.config/gtk-4.0/gtk.css"
+ln -sf "/usr/share/themes/$THEME/gtk-4.0/gtk-dark.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
+info "  GTK4 symlinks set to $THEME"
+
+info "Applying gsettings..."
+gsettings set org.gnome.desktop.interface gtk-theme "$THEME" 2>/dev/null || true
+gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
+info "  gsettings updated"
 
 # ---- 11. Done ----
 echo
 info "Installation complete!"
 info "Log out and back in, or restart Hyprland to apply."
 info "If already in Hyprland, run: hyprctl reload"
+echo ""
+info "=== Post-install: Configure Kvantum for Qt apps (Dolphin, etc.) ==="
+info "  1. Run: kvantummanager"
+info "  2. Select 'Catppuccin-Mocha-Pink' → Apply"
