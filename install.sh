@@ -115,6 +115,7 @@ aur_install aylurs-gtk-shell-git
 aur_install catppuccin-gtk-theme-mocha
 aur_install kvantum-theme-catppuccin-git
 aur_install ttf-geist
+aur_install catppuccin-cursors-mocha
 
 # ---- 5. Backup existing configs ----
 info "Backing up existing configs..."
@@ -246,6 +247,8 @@ mkdir -p "$HOME/.config/gtk-3.0"
 cat > "$HOME/.config/gtk-3.0/settings.ini" <<EOF
 [Settings]
 gtk-theme-name=$THEME
+gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
+gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
 EOF
 info "  ~/.config/gtk-3.0/settings.ini"
@@ -255,6 +258,8 @@ mkdir -p "$HOME/.config/gtk-4.0"
 cat > "$HOME/.config/gtk-4.0/settings.ini" <<EOF
 [Settings]
 gtk-theme-name=$THEME
+gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
+gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
 EOF
 info "  ~/.config/gtk-4.0/settings.ini"
@@ -269,6 +274,8 @@ info "  GTK4 symlinks set to $THEME"
 info "Applying gsettings..."
 gsettings set org.gnome.desktop.interface gtk-theme "$THEME" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
+gsettings set org.gnome.desktop.interface cursor-theme "catppuccin-mocha-dark-cursors" 2>/dev/null || true
+gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null || true
 info "  gsettings updated"
 
 # ---- 11. Done ----
