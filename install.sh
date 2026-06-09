@@ -110,6 +110,8 @@ fi
 
 echo "  [AUR packages]"
 aur_install aylurs-gtk-shell-git
+aur_install catppuccin-gtk-theme-mocha
+aur_install kvantum-theme-catppuccin-git
 
 # ---- 5. Backup existing configs ----
 info "Backing up existing configs..."
@@ -151,7 +153,9 @@ BLACKLIST=(
     berries-1.jpg biking-sunset.jpg
     black-hole.png blueberries.jpg blue-kaiju.png blueprint.png
     bsod.png car-1.png cat-in-clouds.png cat-street.jpg
-    cat-vibin.png city-harbor.png city-on-water.jpg city.png
+    cat-vibin.png city-harbor.png     city-horizon.jpg
+    city-on-water.jpg
+    city.png
     cloud-coffee.jpg coffee-shop.png compass.jpg danbo.jpg
     dark-star.jpg degirled.png desolate-city-2.jpg desolate-city.jpg
     dino.jpg dominik-mayer-10.jpg dominik-mayer-11.jpg dominik-mayer-12.jpg
@@ -231,7 +235,15 @@ else
     info "  Run 'tint random' to apply one!"
 fi
 
-# ---- 10. Done ----
+# ---- 10. Set up GTK4 theme symlinks ----
+info "Setting up GTK4 theme symlinks..."
+rm -rf "$HOME/.config/gtk-4.0/assets" "$HOME/.config/gtk-4.0/gtk.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
+ln -sf /usr/share/themes/catppuccin-mocha-pink-standard+default/gtk-4.0/assets "$HOME/.config/gtk-4.0/assets"
+ln -sf /usr/share/themes/catppuccin-mocha-pink-standard+default/gtk-4.0/gtk.css "$HOME/.config/gtk-4.0/gtk.css"
+ln -sf /usr/share/themes/catppuccin-mocha-pink-standard+default/gtk-4.0/gtk-dark.css "$HOME/.config/gtk-4.0/gtk-dark.css"
+info "  GTK4 symlinks set to catppuccin-mocha-pink"
+
+# ---- 11. Done ----
 echo
 info "Installation complete!"
 info "Log out and back in, or restart Hyprland to apply."
