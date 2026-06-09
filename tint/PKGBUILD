@@ -1,0 +1,16 @@
+# Maintainer: Your Name <you@example.com>
+pkgname=tint
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Apply random wallpapers with awww transitions"
+arch=('any')
+url=""
+license=('MIT')
+depends=('bash' 'awww')
+optdepends=('hyprutils: monitor detection fallback')
+source=("$pkgname")
+sha256sums=('SKIP')
+
+package() {
+  install -Dm755 "$srcdir/$pkgname" "$pkgdir/usr/bin/$pkgname"
+}

@@ -1,0 +1,167 @@
+configuration {
+    font: "Geist 12";
+    show-icons: true;
+    hover-select: true;
+    modi: "drun";
+    display-drun: "❯";
+    display-emoji: "❯";
+    drun-display-format: "{name}";
+}
+
+* {
+    bg:       #1e1e2eE6;
+    bg-alt:   #181825;
+    surface:  #313244;
+    text:     #cdd6f4;
+    dim:      #a6adc8;
+    accent:   #cba6f7;
+    urgent:   #f38ba8;
+    border:   #6c7086;
+
+    background:                 @bg;
+    foreground:                 @text;
+    normal-background:          transparent;
+    normal-foreground:          @dim;
+    selected-normal-background: @accent;
+    selected-normal-foreground: @bg-alt;
+    urgent-background:          @urgent;
+    urgent-foreground:          @bg-alt;
+    alternate-normal-background: transparent;
+    alternate-normal-foreground: @dim;
+    active-background:          transparent;
+    active-foreground:          @dim;
+    selected-active-background: @accent;
+    selected-active-foreground: @bg-alt;
+    alternate-urgent-background: transparent;
+    alternate-urgent-foreground: @dim;
+    selected-urgent-background: @urgent;
+    selected-urgent-foreground: @bg-alt;
+    lightbg:                    transparent;
+    lightfg:                    @dim;
+    separatorcolor:             transparent;
+}
+
+window {
+    width:            30%;
+    border-radius:    3px;
+    border:           2px;
+    border-color:     @border;
+    background-color: @bg;
+    location:         center;
+    anchor:           center;
+}
+
+mainbox {
+    padding:          0;
+    border:           0;
+    spacing:          0;
+    background-color: transparent;
+    children:         [ inputbar, listview ];
+}
+
+inputbar {
+    padding:          12px;
+    spacing:          8px;
+    background-color: @bg-alt;
+    border-radius:    3px 3px 0 0;
+    border:           0;
+    text-color:       @text;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    enabled:          true;
+    background-color: transparent;
+    text-color:       @accent;
+}
+
+textbox-prompt-colon {
+    enabled: false;
+}
+
+entry {
+    background-color: transparent;
+    text-color:       @text;
+    placeholder:       "Search...";
+    placeholder-color: @dim;
+}
+
+message {
+    enabled: false;
+    border: 0;
+    padding: 0;
+}
+
+separator {
+    enabled: false;
+}
+
+listview {
+    lines:     10;
+    columns:   1;
+    spacing:   4px;
+    padding:   8px;
+    background-color: transparent;
+    scrollbar: false;
+    fixed-height: true;
+    border:    0;
+}
+
+element {
+    padding:          8px 12px;
+    border-radius:    3px;
+    background-color: transparent;
+    text-color:       @dim;
+}
+
+element selected {
+    background-color: @accent;
+    text-color:       @bg-alt;
+}
+
+element urgent {
+    background-color: @urgent;
+    text-color:       @bg-alt;
+}
+
+element active {
+    background-color: transparent;
+    text-color:       @dim;
+}
+
+element-icon {
+    size:   24px;
+    margin: 0 8px 0 0;
+    padding: 0;
+}
+
+element-text {
+    expand:          true;
+    vertical-align:  0.5;
+    background-color: transparent;
+}
+
+textbox {
+    border: 0;
+    padding: 0;
+}
+
+sidebar {
+    border: 0;
+}
+
+case-indicator {
+    enabled: false;
+}
+
+num-filtered-rows {
+    enabled: false;
+}
+
+num-rows {
+    enabled: false;
+}
+
+textbox-num-sep {
+    enabled: false;
+}

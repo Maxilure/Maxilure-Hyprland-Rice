@@ -1,0 +1,9 @@
+{
+  "name": "ags-bar",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "ags run app.tsx",
+    "build": "ags bundle app.tsx"
+  }
+}

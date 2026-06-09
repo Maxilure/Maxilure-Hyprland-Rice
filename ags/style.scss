@@ -1,0 +1,354 @@
+@use "sass:string";
+
+// Catppuccin Mocha
+$ctp-rosewater: #f5e0dc;
+$ctp-flamingo: #f2cdcd;
+$ctp-pink: #f5c2e7;
+$ctp-mauve: #cba6f7;
+$ctp-red: #f38ba8;
+$ctp-maroon: #eba0ac;
+$ctp-peach: #fab387;
+$ctp-yellow: #f9e2af;
+$ctp-green: #a6e3a1;
+$ctp-teal: #94e2d5;
+$ctp-sky: #89dceb;
+$ctp-sapphire: #74c7ec;
+$ctp-blue: #89b4fa;
+$ctp-lavender: #b4befe;
+$ctp-text: #cdd6f4;
+$ctp-subtext1: #bac2de;
+$ctp-subtext0: #a6adc8;
+$ctp-overlay2: #9399b2;
+$ctp-overlay1: #7f849c;
+$ctp-overlay0: #6c7086;
+$ctp-surface2: #585b70;
+$ctp-surface1: #45475a;
+$ctp-surface0: #313244;
+$ctp-base: #1e1e2e;
+$ctp-mantle: #181825;
+$ctp-crust: #11111b;
+
+@function gtkalpha($c, $a) {
+  @return string.unquote("alpha(#{$c}, #{$a})");
+}
+
+// DWM-style bar
+window.bar {
+  background: $ctp-base;
+  color: $ctp-text;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  min-height: 24px;
+  padding: 0;
+  border-bottom: 1px solid $ctp-surface0;
+}
+
+// Workspace tags - DWM style
+.workspaces {
+  padding: 0;
+  margin: 0;
+
+  button {
+    all: unset;
+    min-width: 20px;
+    min-height: 24px;
+    padding: 0 4px;
+    font-size: 12px;
+
+    color: $ctp-overlay0;
+
+    &:hover {
+      color: $ctp-subtext1;
+    }
+
+    &.active {
+      color: $ctp-text;
+      font-weight: bold;
+    }
+
+    &.occupied {
+      color: $ctp-overlay2;
+    }
+
+    &.active.occupied {
+      color: $ctp-text;
+      font-weight: bold;
+    }
+  }
+}
+
+// Window Title
+.window-title {
+  padding: 0 12px;
+}
+
+.window-title-text {
+  color: $ctp-subtext0;
+  font-size: 12px;
+}
+
+// System Tray
+.tray-toggle {
+  all: unset;
+  padding: 0 4px;
+  color: $ctp-subtext0;
+  font-size: 10px;
+
+  &:hover {
+    color: $ctp-text;
+  }
+}
+
+.tray-scroll {
+  scrollbar {
+    opacity: 0;
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+.tray-item {
+  all: unset;
+  padding: 0 2px;
+
+  &:hover {
+    background: $ctp-surface0;
+    border-radius: 3px;
+  }
+
+  image {
+    -gtk-icon-size: 20px;
+  }
+}
+
+// Clock
+.clock {
+  all: unset;
+  padding: 0 8px;
+  color: $ctp-subtext1;
+  font-size: 12px;
+
+  &:hover {
+    color: $ctp-text;
+  }
+}
+
+.notification-dot {
+  color: $ctp-overlay0;
+  font-size: 10px;
+
+  &.active {
+    color: $ctp-blue;
+  }
+
+  &.critical {
+    animation: breathe-dot 2s ease-in-out infinite;
+    color: $ctp-red;
+  }
+}
+
+@keyframes breathe-border {
+  0%, 100% { border-color: gtkalpha($ctp-red, 0.3); }
+  50% { border-color: $ctp-red; }
+}
+
+@keyframes breathe-dot {
+  0%, 100% { color: gtkalpha($ctp-red, 0.3); }
+  50% { color: $ctp-red; }
+}
+
+// Notification Popups
+window.notification-popups {
+  margin: 8px;
+}
+
+// Notifications Panel
+window.notifications-panel {
+  background: $ctp-base;
+  color: $ctp-text;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  border-radius: 3px;
+  border: 1px solid $ctp-surface0;
+  margin: 8px;
+}
+
+.notifications-panel-inner {
+  padding: 0;
+}
+
+.notifications-panel-header {
+  padding: 12px 16px;
+}
+
+.notifications-panel-title {
+  color: $ctp-text;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.notifications-panel-clear {
+  all: unset;
+  padding: 4px 12px;
+  border-radius: 3px;
+  background: $ctp-surface0;
+  color: $ctp-subtext0;
+  font-size: 11px;
+
+  &:hover {
+    background: $ctp-surface1;
+    color: $ctp-text;
+  }
+}
+
+.dnd-button {
+  all: unset;
+  padding: 4px 12px;
+  border-radius: 3px;
+  background: $ctp-surface0;
+  color: $ctp-subtext0;
+  font-size: 14px;
+
+  &:hover {
+    background: $ctp-surface1;
+    color: $ctp-text;
+  }
+
+  &.active {
+    background: $ctp-red;
+    color: $ctp-base;
+  }
+}
+
+.notifications-panel-separator {
+  min-height: 1px;
+  background: $ctp-surface0;
+  margin: 0 12px;
+}
+
+.notifications-panel-scroll {
+  // height controlled by parent heightRequest
+}
+
+.notifications-panel-scroll scrollbar {
+  opacity: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.notifications-panel-list {
+  padding: 12px;
+}
+
+.notifications-panel-empty {
+  padding: 40px 16px;
+  color: $ctp-overlay0;
+  font-size: 13px;
+}
+
+// Individual Notification
+.notification {
+  background: $ctp-mantle;
+  border-radius: 3px;
+  padding: 10px;
+  border: 1px solid $ctp-surface0;
+
+  &:hover {
+    background: $ctp-surface0;
+  }
+
+  &.critical {
+    border-color: $ctp-red;
+    animation: breathe-border 2s ease-in-out infinite;
+
+    .notification-app-name {
+      color: $ctp-red;
+    }
+  }
+}
+
+.notification-header {
+  padding: 0;
+}
+
+.notification-app-icon {
+  min-width: 32px;
+  min-height: 32px;
+  margin-right: 8px;
+}
+
+.notification-app-name {
+  color: $ctp-subtext1;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.notification-time {
+  color: $ctp-overlay0;
+  font-size: 10px;
+  margin-right: 8px;
+}
+
+.notification-dismiss {
+  all: unset;
+  margin-left: 8px;
+  padding: 2px;
+  color: $ctp-overlay0;
+  min-width: 16px;
+  min-height: 16px;
+
+  &:hover {
+    color: $ctp-red;
+  }
+}
+
+.notification-content {
+  padding: 8px 0 0 0;
+}
+
+.notification-summary {
+  color: $ctp-text;
+  font-size: 14px;
+}
+
+.notification-body {
+  color: $ctp-subtext0;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.notification-image-box {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.notification-image {
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.notification-icon-image {
+  min-width: 64px;
+  min-height: 64px;
+  margin-right: 10px;
+  background: $ctp-surface0;
+  border-radius: 3px;
+}
+
+.notification-actions {
+  padding: 8px 0 0 0;
+
+  button {
+    all: unset;
+    padding: 6px 12px;
+    border-radius: 3px;
+    background: $ctp-surface0;
+    color: $ctp-subtext1;
+    font-size: 11px;
+    margin-right: 6px;
+
+    &:hover {
+      background: $ctp-surface1;
+      color: $ctp-text;
+    }
+  }
+}

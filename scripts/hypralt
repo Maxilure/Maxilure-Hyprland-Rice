@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+import json, os, subprocess, sys
+
+POS_FILE = "/tmp/hypralt-pos"
+
+def jc(args):
+    return json.loads(subprocess.run(["hyprctl"] + args.split(), capture_output=True, text=True).stdout)
+
+def focused_monitor():
+    for m in jc("monitors -j"):
+        if m["focused"]:
+            return m
+    return jc("monitors -j")[0]
+
+def get_status():
+    fm = focused_monitor()
+    aws = fm["activeWorkspace"]
+    ws10 = None
+    for ws in jc("workspaces -j"):
+        if ws["id"] == 10:
+            ws10 = ws
+            break
+    return aws, fm["name"], ws10
+
+def status():
+    aws, mon, ws10 = get_status()
+    print(f"Active workspace: {aws['name']} on {mon}")
+    if ws10:
+        print(f"WS 10: {ws10['windows']} window(s) on {ws10['monitor']}" + (" (fullscreen)" if ws10["hasfullscreen"] else ""))
+    else:
+        print("WS 10: empty")
+
+def active_workspaces():
+    return [m["activeWorkspace"]["id"] for m in jc("monitors -j")]
+
+def get_wins():
+    active_ids = active_workspaces()
+    key = "+".join(str(i) for i in sorted(active_ids))
+    clients = jc("clients -j")
+    return key, sorted([c for c in clients if c["mapped"] and c["visible"] and c["acceptsInput"] and c["workspace"]["id"] in active_ids], key=lambda w: (w.get("initialClass", "") or "", w.get("initialTitle", "") or ""))
+
+def focus(dir):
+    key, wins = get_wins()
+    if not wins:
+        return
+
+    pos = 0
+    try:
+        data = open(POS_FILE).read().strip()
+        saved_key, saved_pos = data.split(":", 1)
+        if saved_key == key:
+            pos = int(saved_pos)
+    except (FileNotFoundError, ValueError):
+        pass
+
+    if pos < 0 or pos >= len(wins):
+        pos = -1 if dir == "next" else len(wins)
+
+    if dir == "next":
+        pos = (pos + 1) % len(wins)
+    else:
+        pos = (pos - 1) % len(wins)
+
+    target = wins[pos]
+
+    open(POS_FILE, "w").write(f"{key}:{pos}")
+
+    addr = target['address']
+    subprocess.run(["hyprctl", "dispatch", f'hl.dsp.focus({{window = "address:{addr}"}})'])
+    t = (target.get("title") or "").strip() or (target.get("class") or "").strip()
+    ws = target.get("workspace", {}).get("name", "")
+    print(f"-> {t[:80]} (WS {ws})")
+
+
+
+def list_all():
+    status()
+    print()
+    active_ids = active_workspaces()
+    print(f"Windows on active workspaces ({', '.join(str(i) for i in sorted(active_ids))}):")
+    print()
+    clients = jc("clients -j")
+    wins = sorted([c for c in clients if c["mapped"] and c["workspace"]["id"] in active_ids], key=lambda w: w["focusHistoryID"])
+    for w in wins:
+        marker = ">" if w["focusHistoryID"] == 0 else " "
+        t = (w.get("title") or "").strip() or (w.get("class") or "").strip()
+        print(f"  {marker} [WS {w['workspace']['name']}] {t[:80]}")
+
+def main():
+    if len(sys.argv) < 2 or sys.argv[1] in ("--next", "-n", "next"):
+        focus("next")
+    elif sys.argv[1] in ("--prev", "-p", "prev"):
+        focus("prev")
+    elif sys.argv[1] in ("--status", "-s", "status"):
+        status()
+    elif sys.argv[1] in ("--list", "-l", "list"):
+        list_all()
+    elif sys.argv[1] in ("--help", "-h"):
+        print("Usage: hypralt [--status|--next|--prev|--list]")
+        print("  No args:  Alt-Tab to next window")
+        print("  --status: Show workspace info")
+        print("  --next:   Focus next window")
+        print("  --prev:   Focus previous window")
+        print("  --list:   List all windows + workspace info")
+    else:
+        print("Unknown option. Use --help.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

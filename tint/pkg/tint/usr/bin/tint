@@ -1,0 +1,190 @@
+#!/usr/bin/env bash
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/tint"
+CONFIG_FILE="$CONFIG_DIR/tint.conf"
+
+ensure_config_dir() {
+  mkdir -p "$CONFIG_DIR"
+}
+
+get_wallpaper_dir() {
+  ensure_config_dir
+  if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "No wallpaper folder set. Use 'tint set-folder <path>' first." >&2
+    exit 1
+  fi
+  source "$CONFIG_FILE"
+  if [[ -z "$WALLPAPER_DIR" ]]; then
+    echo "No wallpaper folder set. Use 'tint set-folder <path>' first." >&2
+    exit 1
+  fi
+  echo "$WALLPAPER_DIR"
+}
+
+cmd_set_folder() {
+  local dir="$1"
+  if [[ -z "$dir" ]]; then
+    echo "Usage: tint set-folder <path>" >&2
+    exit 1
+  fi
+  if [[ ! -d "$dir" ]]; then
+    echo "Error: '$dir' is not a directory." >&2
+    exit 1
+  fi
+  ensure_config_dir
+  echo "WALLPAPER_DIR=$dir" > "$CONFIG_FILE"
+  echo "Wallpaper folder set to: $dir"
+}
+
+get_monitors() {
+  awww query 2>/dev/null | grep -oP '^[^:]+' || hyprctl monitors -j 2>/dev/null | python3 -c "
+import json, sys
+try:
+    monitors = json.load(sys.stdin)
+    for m in monitors:
+        print(m.get('name', ''))
+except:
+    pass
+"
+}
+
+get_effects() {
+  cat <<EOF
+simple
+wave
+grow
+outer
+center
+any
+random
+EOF
+}
+
+cmd_random() {
+  local wallpaper_dir
+  wallpaper_dir=$(get_wallpaper_dir)
+
+  local monitors=()
+  local effect=""
+
+  if [[ $# -ge 1 ]]; then
+    effect="${@: -1}"
+    local monitor_list="${@:1:$#-1}"
+    IFS=',' read -ra monitors <<< "$monitor_list"
+  fi
+
+  if [[ ${#monitors[@]} -eq 0 ]]; then
+    local detected
+    detected=$(get_monitors)
+    if [[ -z "$detected" ]]; then
+      echo "Error: Could not detect monitors. Is awww running?" >&2
+      exit 1
+    fi
+    mapfile -t monitors <<< "$detected"
+  fi
+
+  if [[ -z "$effect" ]]; then
+    echo "Usage: tint random <monitors> <effect>" >&2
+    cmd_help_random >&2
+    exit 1
+  fi
+
+  local effect_ok=false
+  while IFS= read -r e; do
+    [[ "$e" == "$effect" ]] && effect_ok=true && break
+  done < <(get_effects)
+  if ! $effect_ok; then
+    echo "Error: unknown effect '$effect'." >&2
+    echo "Available effects: $(get_effects | tr '\n' ' ')" >&2
+    exit 1
+  fi
+
+  shopt -s nullglob
+  local wallpapers=("$wallpaper_dir"/*.{jpg,jpeg,png,bmp,gif,webp})
+  shopt -u nullglob
+  if [[ ${#wallpapers[@]} -eq 0 ]]; then
+    echo "Error: No image files found in '$wallpaper_dir'." >&2
+    exit 1
+  fi
+
+  local random_wallpaper
+  random_wallpaper="${wallpapers[RANDOM % ${#wallpapers[@]}]}"
+
+  echo "Applying '$random_wallpaper' to ${monitors[*]} with '$effect' transition..."
+  for m in "${monitors[@]}"; do
+    awww img "$random_wallpaper" \
+      --outputs "$m" \
+      --transition-type "$effect" \
+      --transition-fps 60 \
+      --transition-duration 3
+  done
+
+  echo "Done."
+}
+
+cmd_help_random() {
+  cat <<EOF
+Usage: tint random <monitors> <effect>
+
+Apply a random wallpaper from the configured folder to one or more monitors.
+
+Arguments:
+  monitors    Comma-separated list of monitor names (e.g. DP-3,HDMI-A-1)
+  effect      Transition effect type
+
+Available effects:
+  simple   Crossfade
+  wave     Wipe with a wave
+  grow     Expand from center
+  outer    Shrink from edges
+  center   Radial from center
+  any      Randomly pick any effect
+  random   Random transition direction
+
+Examples:
+  tint random DP-3 simple
+  tint random DP-3,HDMI-A-1 wave
+  tint random eDP-1 center
+EOF
+}
+
+cmd_help() {
+  cat <<EOF
+Usage: tint <command>
+
+Commands:
+  set-folder <path>   Set the wallpaper directory
+  random <monitors> <effect>   Apply random wallpaper to monitor(s) with effect
+  help                Show this help message
+
+Run 'tint help random' for detailed help on the random command.
+EOF
+}
+
+main() {
+  local cmd="${1:-help}"
+
+  case "$cmd" in
+    set-folder|set_folder)
+      cmd_set_folder "$2"
+      ;;
+    random)
+      shift
+      cmd_random "$@"
+      ;;
+    help|--help|-h)
+      if [[ "$2" == "random" ]]; then
+        cmd_help_random
+      else
+        cmd_help
+      fi
+      ;;
+    *)
+      echo "Unknown command: $cmd" >&2
+      cmd_help >&2
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"
