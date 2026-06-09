@@ -148,6 +148,7 @@ WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 BLACKLIST=(
     dominik-mayer-10.jpg
     flying-boat.jpg
+    fox.png
     keyboard-2.png
     sakura-aura.jpg
     space.jpg
