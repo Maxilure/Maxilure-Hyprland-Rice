@@ -146,7 +146,9 @@ info "  tint → /usr/local/bin/tint"
 WALLPAPER_REPO="https://github.com/orangci/walls-catppuccin-mocha.git"
 WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
 BLACKLIST=(
-    astronaut.png beach.jpg berries-1.jpg biking-sunset.jpg
+    astronaut.png     beach-path.jpg
+    beach.jpg
+    berries-1.jpg biking-sunset.jpg
     black-hole.png blueberries.jpg blue-kaiju.png blueprint.png
     bsod.png car-1.png cat-in-clouds.png cat-street.jpg
     cat-vibin.png city-harbor.png city-on-water.jpg city.png
