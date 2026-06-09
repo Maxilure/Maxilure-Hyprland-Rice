@@ -152,6 +152,8 @@ BLACKLIST=(
     fox.png
     jellyfish.jpg
     keyboard-2.png
+    majo-no-tabitabi.jpg
+    purple-horizon.jpg
     sakura-aura.jpg
     space.jpg
     sushi.jpg
