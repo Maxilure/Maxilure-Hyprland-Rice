@@ -116,6 +116,7 @@ aur_install catppuccin-gtk-theme-mocha
 aur_install kvantum-theme-catppuccin-git
 aur_install ttf-geist
 aur_install catppuccin-cursors-mocha
+aur_install catppuccin-sddm-theme-mocha
 
 # ---- 5. Backup existing configs ----
 info "Backing up existing configs..."
@@ -278,7 +279,16 @@ gsettings set org.gnome.desktop.interface cursor-theme "catppuccin-mocha-dark-cu
 gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null || true
 info "  gsettings updated"
 
-# ---- 11. Done ----
+# ---- 11. Configure SDDM theme ----
+info "Setting up SDDM theme..."
+sudo mkdir -p /etc/sddm.conf.d
+sudo tee /etc/sddm.conf.d/theme.conf > /dev/null <<EOF
+[Theme]
+Current=catppuccin-mocha-pink
+EOF
+info "  SDDM theme set to catppuccin-mocha-pink"
+
+# ---- 12. Done ----
 echo
 info "Installation complete!"
 info "Log out and back in, or restart Hyprland to apply."
