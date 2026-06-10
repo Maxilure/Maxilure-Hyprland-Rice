@@ -16,7 +16,7 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | [AGS](https://github.com/Aylur/ags) | Aylur's GTK Shell (top bar / widgets) |
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
-| Wallpapers | Bundled in repo, copied to `~/Pictures/Wallpapers/` |
+| Wallpapers | Bundled in repo (curated from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha)) |
 
 ## Keybinds
 
