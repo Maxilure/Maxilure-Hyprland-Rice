@@ -1,91 +1,123 @@
+import { For, createBinding, createState, onCleanup } from "ags"
 import { Gtk } from "ags/gtk4"
-import { createState, onCleanup } from "ags"
-import { For } from "ags"
-import tray, { renderIcon } from "../lib/tray"
-import AstalTray from "gi://AstalTray"
+import GLib from "gi://GLib?version=2.0"
+import Gio from "gi://Gio?version=2.0"
+import AstalTray from "gi://AstalTray?version=0.1"
+import tray from "../lib/tray"
 
-export default function SystemTray() {
-  const [open, setOpen] = createState(false)
-  const [items, setItems] = createState<AstalTray.TrayItem[]>(tray.get_items())
-
-  const update = () => {
-    setItems(tray.get_items())
+function copyMenuModel(model: Gio.MenuModel | null): Gio.Menu | null {
+  if (!model) return null
+  const menu = Gio.Menu.new()
+  for (let i = 0, n = model.get_n_items(); i < n; ++i) {
+    const item = Gio.MenuItem.new_from_model(model, i)
+    const submenu = model.get_item_link(i, Gio.MENU_LINK_SUBMENU)
+    if (submenu) {
+      item.set_attribute_value(Gio.MENU_ATTRIBUTE_ACTION, null)
+      item.set_submenu(copyMenuModel(submenu))
+    }
+    const section = model.get_item_link(i, Gio.MENU_LINK_SECTION)
+    if (section) {
+      item.set_section(copyMenuModel(section))
+    }
+    menu.append_item(item)
   }
+  return menu
+}
 
-  const id1 = tray.connect("item-added", update)
-  const id2 = tray.connect("item-removed", update)
-  onCleanup(() => {
-    tray.disconnect(id1)
-    tray.disconnect(id2)
-  })
+function TrayItem({ item }: { item: AstalTray.TrayItem }) {
+  return (
+    <box
+      class="tray-item"
+      tooltipText={item.tooltip_markup}
+      $={(self: Gtk.Box) => {
+        const popover = Gtk.PopoverMenu.new_from_model(
+          copyMenuModel(item.menuModel),
+        )
+        popover.insert_action_group("dbusmenu", item.actionGroup)
+        popover.set_parent(self)
 
-  const arrowLabel = open.as((v) => (v ? "▶" : "◀"))
+        const safeCopy = () => copyMenuModel(item.menuModel)
+
+        const actionHandler = item.connect(
+          "notify::action-group",
+          () => popover.insert_action_group("dbusmenu", item.actionGroup),
+        )
+
+        const left = Gtk.GestureClick.new()
+        left.set_button(1)
+        left.connect("pressed", () => item.activate(0, 0))
+        self.add_controller(left)
+
+        const right = Gtk.GestureClick.new()
+        right.set_button(3)
+        right.connect("pressed", () => {
+          if (item.menuModel) {
+            item.about_to_show()
+            popover.set_menu_model(safeCopy())
+            popover.popup()
+          } else {
+            item.secondary_activate(0, 0)
+          }
+        })
+        self.add_controller(right)
+
+        onCleanup(() => {
+          item.disconnect(actionHandler)
+          self.remove_controller(left)
+          self.remove_controller(right)
+          popover.unparent()
+        })
+      }}
+    >
+      <image gicon={createBinding(item, "gicon")} />
+    </box>
+  )
+}
+
+export function SystemTray() {
+  const [trayVisible, setTrayVisible] = createState(false)
 
   return (
-    <box class="system-tray" spacing={4}>
-      <button class="tray-toggle" onClicked={() => setOpen((v) => !v)}>
-        <label label={arrowLabel} />
+    <box class="system-tray" spacing={0}>
+      <button
+        class="tray-toggle"
+        onClicked={() => setTrayVisible(!trayVisible.get())}
+      >
+        <label
+          label={trayVisible((v) => (v ? "◀" : "▶"))}
+        />
       </button>
-      <scrolledwindow
-        class="tray-scroll"
-        visible={open}
-        hscrollbar-policy={Gtk.PolicyType.AUTOMATIC}
-        vscrollbar-policy={Gtk.PolicyType.NEVER}
-        $={(self) => {
-          const scrollCtrl = new Gtk.EventControllerScroll()
-          scrollCtrl.set_flags(Gtk.EventControllerScrollFlags.VERTICAL)
-          scrollCtrl.connect("scroll", (_ctrl, _dx, dy) => {
-            const adj = self.hadjustment
-            if (!adj) return false
-            const step = dy * 30
-            let newVal = adj.value + step
-            newVal = Math.max(adj.lower, Math.min(adj.upper - adj.page_size, newVal))
-            adj.value = newVal
-            return true
+      <box
+        class="tray-items"
+        visible={trayVisible}
+        spacing={2}
+        $={(self: Gtk.Box) => {
+          const itemsHandler = tray.connect(
+            "notify::items",
+            () => GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
+              self.queue_resize()
+              return GLib.SOURCE_REMOVE
+            }),
+          )
+
+          const notifyCleanup = trayVisible.subscribe(() => {
+            if (trayVisible.get())
+              GLib.timeout_add(GLib.PRIORITY_DEFAULT, 50, () => {
+                self.queue_resize()
+                return GLib.SOURCE_REMOVE
+              })
           })
-          self.add_controller(scrollCtrl)
+
+          onCleanup(() => {
+            tray.disconnect(itemsHandler)
+            notifyCleanup()
+          })
         }}
       >
-        <box class="tray-items" spacing={4}>
-          <For each={items}>
-            {(item) => {
-              const icon = renderIcon(item) || (
-                <label label={item.get_id()?.charAt(0).toUpperCase() || "?"} />
-              )
-              return (
-                <button
-                  class="tray-item"
-                  onClicked={() => item.activate(0, 0)}
-                  $={(self) => {
-                    const rightClick = new Gtk.GestureClick()
-                    rightClick.set_button(3)
-                    rightClick.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
-                    rightClick.connect("pressed", (_g, _n, x, y) => {
-                      item.about_to_show()
-                      const menuModel = item.get_menu_model()
-                      if (menuModel) {
-                        const actionGroup = item.get_action_group()
-                        if (actionGroup) {
-                          self.insert_action_group("dbusmenu", actionGroup)
-                        }
-                        const popover = new Gtk.PopoverMenu()
-                        popover.menu_model = menuModel
-                        popover.set_parent(self)
-                        popover.popup()
-                      } else {
-                        item.secondary_activate(x, y)
-                      }
-                    })
-                    self.add_controller(rightClick)
-                  }}
-                >
-                  {icon}
-                </button>
-              )
-            }}
-          </For>
-        </box>
-      </scrolledwindow>
+        <For each={createBinding(tray, "items")}>
+          {(item) => <TrayItem item={item} />}
+        </For>
+      </box>
     </box>
   )
 }

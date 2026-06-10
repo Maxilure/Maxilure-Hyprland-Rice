@@ -15,6 +15,8 @@ declare global {
         showWeekNumbers?: boolean
         onDaySelected?: () => void
       }>
+      popover: CCProps<Gtk.Popover, Partial<Gtk.Popover.ConstructorProps>>
+      flowbox: CCProps<Gtk.FlowBox, Partial<Gtk.FlowBox.ConstructorProps>>
     }
   }
 }

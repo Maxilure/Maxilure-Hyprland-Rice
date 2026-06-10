@@ -1,9 +1,9 @@
 import app from "ags/gtk4/app"
 import { Astal, Gtk, Gdk } from "ags/gtk4"
 import { Workspaces } from "./widgets/Workspaces"
+import { SystemTray } from "./widgets/SystemTray"
 import { Clock } from "./widgets/Clock"
 import { WindowTitle } from "./widgets/WindowTitle"
-import SystemTray from "./widgets/SystemTray"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor

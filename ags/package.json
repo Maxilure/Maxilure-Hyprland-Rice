@@ -5,5 +5,8 @@
   "scripts": {
     "dev": "ags run app.tsx",
     "build": "ags bundle app.tsx"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
   }
 }
