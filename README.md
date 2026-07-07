@@ -11,7 +11,6 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 
 ![Fastfetch](screenshots/fastfetch.png)
 
-![Bar](screenshots/bar.png)
 
 ## What's Included
 
