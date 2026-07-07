@@ -34,7 +34,10 @@ hl.bind("ALT + TAB",  hl.dsp.exec_cmd("hypralt"))
 hl.bind(mainMod .. " + tab", hl.dsp.window.close())
 
 -- Float toggle
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+
+-- Clipboard history (cliphist + rofi)
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.config/rofi/clipboard-picker.sh"))
 
 -- Fullscreen (true fullscreen, no topbar)
 hl.bind(mainMod .. " + ALT + F", hl.dsp.window.fullscreen())
@@ -84,6 +87,12 @@ hl.bind("Print", hl.dsp.exec_cmd("bash -c 'grimblast --freeze copysave area ~/Pi
 
 -- The Panic Button: Instantly kills all screenshot processes if the screen gets stuck
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("killall -9 grimblast swappy slurp hyprpicker grim"))
+
+-- Auto-clicker: rapid toggle (10 clicks/sec)
+hl.bind("ALT + CTRL + C", hl.dsp.exec_cmd("~/.local/bin/autoclicker-toggle.sh"))
+
+-- Auto-clicker: hold-button toggle (holds left click down instead of rapid-firing)
+hl.bind("ALT + CTRL + V", hl.dsp.exec_cmd("~/.local/bin/autoclicker-hold-toggle.sh"))
 
 -----------------------------
 ---- WORKSPACES -------------

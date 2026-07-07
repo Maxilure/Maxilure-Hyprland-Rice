@@ -10,5 +10,9 @@
  hl.on("hyprland.start", function () 
    hl.exec_cmd("hyprpolkitagent")
    hl.exec_cmd("awww-daemon")
-   hl.exec_cmd("ags run")
+   hl.exec_cmd("quickshell")
+
+   -- clipboard history (cliphist): watch text and images separately
+   hl.exec_cmd("wl-paste --type text --watch cliphist store")
+   hl.exec_cmd("wl-paste --type image --watch cliphist store")
  end)
