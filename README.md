@@ -64,7 +64,85 @@ Before using, add your monitors in `~/.config/hypr/monitors.lua` (it comes with 
 
 - **Kvantum (Qt apps, e.g. Dolphin):** Run `kvantummanager` and select `Catppuccin-Mocha-Pink` → Apply
 - **Tint:** Run `tint set-folder ~/Pictures/Wallpapers` to set up the wallpaper folder
-- **Clipboard picker:** Install `cliphist` and ensure `wl-paste --watch cliphist store` runs on startup for `SUPER + V` to work
+
+## Usage
+
+### Tint (wallpapers)
+
+Tint is a wallpaper randomizer built on top of `awww`. First-time setup:
+
+```bash
+tint set-folder ~/Pictures/Wallpapers   # point it at your wallpaper folder
+tint random                              # apply a random one immediately
+```
+
+`SUPER + W` triggers a random wallpaper at any time. Tint picks per-monitor automatically if multiple monitors are connected.
+
+### Clipboard picker (`SUPER + V`)
+
+The clipboard picker requires `cliphist` to be running in the background, which the startup config handles automatically via `startup.lua`. If it's not working:
+
+1. Check it's running: `pgrep cliphist`
+2. If not, start it manually: `wl-paste --type text --watch cliphist store &`
+3. Copy something, then try `SUPER + V` again
+
+Paste behavior is terminal-aware — terminals get `Ctrl+Shift+V`, everything else gets `Ctrl+V`.
+
+### Emoji picker (`SUPER + .`)
+
+Loops so you can insert multiple emojis in a row. Press `Escape` to close.
+
+### Quickshell (bar & widgets)
+
+The bar targets the screen named in `~/.config/quickshell/settings.json` (`barScreen`). If that monitor isn't connected, it automatically falls back to all available screens — no config change needed.
+
+**Notifications:** Quickshell acts as its own notification server. Do **not** run `dunst`, `mako`, or `swaync` alongside it — they'll conflict on the D-Bus notification seat and one will silently win.
+
+To change which screen the bar appears on, edit `settings.json`:
+
+```json
+"barScreen": "DP-3"
+```
+
+Use `hyprctl monitors` to list your screen names.
+
+### Hypralt (`ALT + TAB`)
+
+Python-based window switcher. Cycles through windows on the focused monitor. If it stops responding, kill the stuck process:
+
+```bash
+pkill -f hypralt
+```
+
+### Screenshots (`Print`)
+
+Draws a selection box, copies to clipboard, and opens Swappy for annotation. `SUPER + Escape` kills any stuck `grim`/`slurp` process if a screenshot gets frozen mid-selection.
+
+## Troubleshooting
+
+**Bar not showing after install**
+Run `quickshell` from a terminal and check for errors. Make sure no other shell (AGS, waybar, etc.) is running on the same screen.
+
+**Notifications not appearing**
+Make sure `dunst`, `mako`, or `swaync` are not running — they block Quickshell from claiming the notification D-Bus seat. Stop them with `pkill dunst` (or equivalent) and reload Hyprland.
+
+**Clipboard picker shows nothing**
+`cliphist` only stores entries that were copied *after* it started. Copy something first, then try `SUPER + V`. If it still doesn't work, check `startup.lua` has the `wl-paste --watch cliphist store` lines and restart Hyprland.
+
+**Tint: "No wallpaper folder set"**
+Run `tint set-folder ~/Pictures/Wallpapers` once to initialise the config.
+
+**Qt apps (Dolphin, etc.) not themed**
+Run `kvantummanager`, select `Catppuccin-Mocha-Pink`, and click Apply. Log out and back in if it doesn't take immediately.
+
+**Cursor wrong in some apps**
+Make sure `XCURSOR_THEME` and `XCURSOR_SIZE` are set in `~/.config/hypr/env.lua` (they are by default). If a specific app still shows the wrong cursor, set `WLR_NO_HARDWARE_CURSORS=1` in env.lua as a workaround.
+
+**`hypralt` not in PATH after install**
+The script installs it to `~/.local/bin/`. Make sure that's in your `PATH`:
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
 
 ## Theme
 
