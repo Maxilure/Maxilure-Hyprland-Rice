@@ -90,28 +90,34 @@ pacman_install slurp
 pacman_install hyprpicker
 pacman_install grim
 pacman_install jq
-pacman_install dart-sass
-pacman_install gtk3
-pacman_install gtk-layer-shell
-pacman_install gobject-introspection
-pacman_install gjs
-pacman_install npm
+pacman_install cliphist
+pacman_install wl-clipboard
 
 if [[ "$DISTRO" == "CachyOS" ]]; then
     pacman_install rofi
     pacman_install awww
     pacman_install grimblast-git
     pacman_install hyprpolkitagent
+    if pacman -Q quickshell &>/dev/null; then
+        echo "  ✓ quickshell already installed"
+        ((packages_skipped++))
+    else
+        echo "  → Installing quickshell (CachyOS repo)..."
+        sudo pacman -S --noconfirm quickshell && ((packages_installed++)) || {
+            warn "quickshell not found in CachyOS repo, falling back to AUR..."
+            aur_install quickshell-git
+        }
+    fi
 else
     pacman_install hyprpolkitagent
     echo "  [AUR packages]"
     aur_install rofi-wayland
     aur_install awww
     aur_install grimblast-git
+    aur_install quickshell-git
 fi
 
 echo "  [AUR packages]"
-aur_install aylurs-gtk-shell-git
 aur_install catppuccin-gtk-theme-mocha
 aur_install kvantum-theme-catppuccin-git
 aur_install ttf-geist
@@ -121,7 +127,7 @@ aur_install catppuccin-sddm-theme-mocha
 # ---- 5. Backup existing configs ----
 info "Backing up existing configs..."
 TIMESTAMP=$(date +%s)
-for dir in kitty fastfetch rofi ags hypr; do
+for dir in kitty fastfetch rofi quickshell hypr; do
     if [[ -d "$HOME/.config/$dir" ]]; then
         mv "$HOME/.config/$dir" "$HOME/.config/$dir.bak-$TIMESTAMP"
         info "  ~/.config/$dir → ~/.config/$dir.bak-$TIMESTAMP"
@@ -130,12 +136,12 @@ done
 
 # ---- 6. Copy configs ----
 info "Copying configs..."
-cp -r "$SCRIPT_DIR/kitty"     "$HOME/.config/kitty"
-cp -r "$SCRIPT_DIR/fastfetch" "$HOME/.config/fastfetch"
-cp -r "$SCRIPT_DIR/rofi"      "$HOME/.config/rofi"
-cp -r "$SCRIPT_DIR/ags"       "$HOME/.config/ags"
-cp -r "$SCRIPT_DIR/hypr"      "$HOME/.config/hypr"
-info "  Configs deployed to ~/.config/{kitty,fastfetch,rofi,ags,hypr}"
+cp -r "$SCRIPT_DIR/kitty"       "$HOME/.config/kitty"
+cp -r "$SCRIPT_DIR/fastfetch"   "$HOME/.config/fastfetch"
+cp -r "$SCRIPT_DIR/rofi"        "$HOME/.config/rofi"
+cp -r "$SCRIPT_DIR/quickshell"  "$HOME/.config/quickshell"
+cp -r "$SCRIPT_DIR/hypr"        "$HOME/.config/hypr"
+info "  Configs deployed to ~/.config/{kitty,fastfetch,rofi,quickshell,hypr}"
 
 # ---- 7. Install scripts ----
 info "Installing scripts..."

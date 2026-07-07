@@ -11,9 +11,8 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 |---|---|
 | [Kitty](https://sw.kovidgoyal.net/kitty/) | Terminal emulator |
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info fetch |
-| [Rofi](https://github.com/davatorium/rofi) | App launcher (`rofi -show drun`) |
-| [RofiMoji](https://github.com/fdw/rofimoji) | Emoji picker (`SUPER + .`) |
-| [AGS](https://github.com/Aylur/ags) | Aylur's GTK Shell (top bar / widgets) |
+| [Rofi](https://github.com/davatorium/rofi) | App launcher, emoji picker, clipboard picker |
+| [Quickshell](https://quickshell.outfoxxed.me/) | Top bar, widgets, tray, notifications, tools panel |
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
 | SDDM Theme | Catppuccin Mocha Pink |
@@ -27,10 +26,11 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | `SUPER + Return` | Open terminal (Kitty) |
 | `SUPER + Space` | Open app launcher (Rofi) |
 | `SUPER + .` | Open emoji picker (RofiMoji) |
+| `SUPER + V` | Open clipboard picker (Rofi + cliphist) |
 | `SUPER + W` | Random wallpaper (Tint) |
 | `ALT + TAB` | Window switcher (Hypralt) |
 | `SUPER + Q` | Kill focused window |
-| `SUPER + V` | Toggle window float |
+| `SUPER + F` | Toggle window float |
 | `SUPER + ALT + F` | Toggle fullscreen |
 | `Print` | Screenshot (area → clipboard + Swappy) |
 | `SUPER + Escape` | Kill stuck screenshot processes |
@@ -51,7 +51,7 @@ What the script does:
 1. Detects your distro (CachyOS / Arch), installs `yay`, removes `paru` if found
 2. Installs all required packages (skips already-installed ones)
 3. Backs up any existing configs in `~/.config/`
-4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,ags,hypr}`
+4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,quickshell,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
 6. Copies bundled wallpapers to `~/Pictures/Wallpapers/`
 7. Applies Catppuccin Mocha Pink GTK/Qt/cursor themes and SDDM theme
@@ -64,6 +64,7 @@ Before using, add your monitors in `~/.config/hypr/monitors.lua` (it comes with 
 
 - **Kvantum (Qt apps, e.g. Dolphin):** Run `kvantummanager` and select `Catppuccin-Mocha-Pink` → Apply
 - **Tint:** Run `tint set-folder ~/Pictures/Wallpapers` to set up the wallpaper folder
+- **Clipboard picker:** Install `cliphist` and ensure `wl-paste --watch cliphist store` runs on startup for `SUPER + V` to work
 
 ## Theme
 
@@ -73,6 +74,6 @@ This rice uses **Catppuccin Mocha** — a warm, low-contrast color palette. Chec
 
 - [Hyprland](https://hyprland.org/) — the Wayland compositor
 - [Catppuccin](https://github.com/catppuccin/catppuccin) — color palette
-- [Aylur's GTK Shell](https://github.com/Aylur/ags) — widget system
+- [Quickshell](https://quickshell.outfoxxed.me/) — widget system (bar, tray, notifications)
 - [awww](https://codeberg.org/LGFae/awww) — wallpaper daemon
 - [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — wallpaper collection

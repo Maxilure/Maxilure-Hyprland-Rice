@@ -1,0 +1,18 @@
+singleton Settings 1.0 Settings.qml
+singleton Notifications 1.0 Notifications.qml
+singleton Currency 1.0 Currency.qml
+singleton CalcHistory 1.0 CalcHistory.qml
+Bar 1.0 Bar.qml
+Calculator 1.0 Calculator.qml
+CalcHistoryPanel 1.0 CalcHistoryPanel.qml
+CalendarPanel 1.0 CalendarPanel.qml
+Clock 1.0 Clock.qml
+CurrencyConverter 1.0 CurrencyConverter.qml
+CurrencySidePanel 1.0 CurrencySidePanel.qml
+ToastLayer 1.0 ToastLayer.qml
+ToolsPanel 1.0 ToolsPanel.qml
+TimeConverter 1.0 TimeConverter.qml
+SettingsTool 1.0 SettingsTool.qml
+Tray 1.0 Tray.qml
+WindowTitle 1.0 WindowTitle.qml
+Workspaces 1.0 Workspaces.qml
