@@ -5,6 +5,14 @@
 
 A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, functional workflow — themed around [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
 
+## Showcase
+
+![Desktop](screenshots/desktop.png)
+
+![Fastfetch](screenshots/fastfetch.png)
+
+![Bar](screenshots/bar.png)
+
 ## What's Included
 
 | Component | Role |
