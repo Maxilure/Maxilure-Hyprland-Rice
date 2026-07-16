@@ -10,7 +10,7 @@
 > - [x] Cursor theme → WhiteSur cursors (+ `~/.icons/default` fallback for Electron apps like Discord)
 > - [ ] Kvantum theme (on hold)
 > - [ ] SDDM theme
-> - [ ] Kitty color scheme
+> - [x] Kitty color scheme
 > - [ ] Rofi color scheme (`rofi/config.rasi`)
 > - [x] `hypr/env.lua` cursor/GTK theme env vars
 > - [x] `install.sh` package list (`catppuccin-*` → Graphite/WhiteSur equivalents)
