@@ -6,8 +6,6 @@ import "Colors.js" as C
 Item {
     id: root
 
-    property var barWindow
-
     readonly property string title: Hyprland.activeToplevel?.title ?? ""
     property string cls: ""
 
@@ -40,30 +38,6 @@ Item {
 
     implicitWidth:  Math.min(row.implicitWidth + 24, 560)
     implicitHeight: 24
-
-    MouseArea {
-        id: titleMa
-        anchors.fill: parent
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
-        onClicked: toolsPanel.open = !toolsPanel.open
-    }
-
-    // Accent underline when the dropdown is open (DWM-style highlight)
-    Rectangle {
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 2
-        color: C.accent
-        visible: toolsPanel.open
-    }
-
-    ToolsPanel {
-        id: toolsPanel
-        barWindow: root.barWindow
-        anchorItem: root
-    }
 
     Row {
         id: row

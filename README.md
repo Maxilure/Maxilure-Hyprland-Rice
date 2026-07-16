@@ -3,7 +3,21 @@
 > **⚠️ Personal config — not intended for public use.**
 > This is my personal dotfiles archive, shared as-is. The install script modifies packages, removes `paru`, overwrites config directories, and makes other changes specific to my setup. Review it before running. Use at your own risk.
 
-A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, functional workflow — themed around [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
+> **🚧 Theme migration in progress.**
+> This rice is moving away from Catppuccin Mocha to a different dark theme ([Graphite](https://github.com/vinceliuice/Graphite-gtk-theme)). Expect broad, breaking changes across configs and `install.sh` until this notice is removed. Checklist:
+> - [ ] Quickshell colors (`Colors.js` → theme-agnostic palette)
+> - [x] GTK3/4 theme → Graphite (Dark)
+> - [x] Cursor theme → WhiteSur cursors (+ `~/.icons/default` fallback for Electron apps like Discord)
+> - [ ] Kvantum theme (on hold)
+> - [ ] SDDM theme
+> - [ ] Kitty color scheme
+> - [ ] Rofi color scheme (`rofi/config.rasi`)
+> - [x] `hypr/env.lua` cursor/GTK theme env vars
+> - [x] `install.sh` package list (`catppuccin-*` → Graphite/WhiteSur equivalents)
+> - [ ] Bundled wallpapers (currently from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha))
+> - [ ] README wording/screenshots below
+
+A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, functional workflow.
 
 ## Showcase
 
@@ -19,11 +33,12 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | [Kitty](https://sw.kovidgoyal.net/kitty/) | Terminal emulator |
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info fetch |
 | [Rofi](https://github.com/davatorium/rofi) | App launcher, emoji picker, clipboard picker |
-| [Quickshell](https://quickshell.outfoxxed.me/) | Top bar, widgets, tray, notifications, tools panel |
+| [Quickshell](https://quickshell.outfoxxed.me/) | Top bar, widgets, tray, notifications |
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
 | SDDM Theme | Catppuccin Mocha Pink |
-| GTK/Kvantum/Cursor | Catppuccin Mocha Pink themed |
+| GTK/Cursor | Graphite (Dark) + WhiteSur cursors |
+| Kvantum | Catppuccin Mocha Pink (pending migration) |
 | Wallpapers | Bundled (curated from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha)) |
 
 ## Keybinds
@@ -61,7 +76,7 @@ What the script does:
 4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,quickshell,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
 6. Copies bundled wallpapers to `~/Pictures/Wallpapers/`
-7. Applies Catppuccin Mocha Pink GTK/Qt/cursor themes and SDDM theme
+7. Applies Graphite GTK theme + WhiteSur cursor theme, Catppuccin Mocha Pink Kvantum/SDDM theme (Kvantum/SDDM migration pending)
 
 After install, log out and back in, or restart SDDM / Hyprland.
 
@@ -143,7 +158,7 @@ Run `tint set-folder ~/Pictures/Wallpapers` once to initialise the config.
 Run `kvantummanager`, select `Catppuccin-Mocha-Pink`, and click Apply. Log out and back in if it doesn't take immediately.
 
 **Cursor wrong in some apps**
-Make sure `XCURSOR_THEME` and `XCURSOR_SIZE` are set in `~/.config/hypr/env.lua` (they are by default). If a specific app still shows the wrong cursor, set `WLR_NO_HARDWARE_CURSORS=1` in env.lua as a workaround.
+Make sure `XCURSOR_THEME` and `XCURSOR_SIZE` are set in `~/.config/hypr/env.lua` (they are by default). Electron/Chromium apps (Discord, etc.) often ignore `XCURSOR_THEME` entirely and instead resolve the cursor via `~/.icons/default/index.theme` → `Inherits=` — the install script sets this up automatically. If a specific app still shows the wrong cursor, set `WLR_NO_HARDWARE_CURSORS=1` in env.lua as a workaround.
 
 **`hypralt` not in PATH after install**
 The script installs it to `~/.local/bin/`. Make sure that's in your `PATH`:

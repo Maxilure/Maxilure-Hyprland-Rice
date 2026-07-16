@@ -31,7 +31,6 @@ PanelWindow {
         // Center: active window title
         WindowTitle {
             anchors.centerIn: parent
-            barWindow: root
         }
 
         // Right: tray + clock

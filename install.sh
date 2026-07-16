@@ -118,10 +118,10 @@ else
 fi
 
 echo "  [AUR packages]"
-aur_install catppuccin-gtk-theme-mocha
+aur_install graphite-gtk-theme-black-git
+aur_install whitesur-cursor-theme-git
 aur_install kvantum-theme-catppuccin-git
 aur_install ttf-geist
-aur_install catppuccin-cursors-mocha
 aur_install catppuccin-sddm-theme-mocha
 
 # ---- 5. Backup existing configs ----
@@ -169,14 +169,15 @@ else
 fi
 
 # ---- 10. Configure GTK themes ----
-THEME="catppuccin-mocha-pink-standard+default"
+THEME="Graphite-Dark"
+CURSOR_THEME="WhiteSur-cursors"
 
 info "Writing GTK3 settings..."
 mkdir -p "$HOME/.config/gtk-3.0"
 cat > "$HOME/.config/gtk-3.0/settings.ini" <<EOF
 [Settings]
 gtk-theme-name=$THEME
-gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
+gtk-cursor-theme-name=$CURSOR_THEME
 gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
 EOF
@@ -187,7 +188,7 @@ mkdir -p "$HOME/.config/gtk-4.0"
 cat > "$HOME/.config/gtk-4.0/settings.ini" <<EOF
 [Settings]
 gtk-theme-name=$THEME
-gtk-cursor-theme-name=catppuccin-mocha-dark-cursors
+gtk-cursor-theme-name=$CURSOR_THEME
 gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
 EOF
@@ -203,9 +204,19 @@ info "  GTK4 symlinks set to $THEME"
 info "Applying gsettings..."
 gsettings set org.gnome.desktop.interface gtk-theme "$THEME" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
-gsettings set org.gnome.desktop.interface cursor-theme "catppuccin-mocha-dark-cursors" 2>/dev/null || true
+gsettings set org.gnome.desktop.interface cursor-theme "$CURSOR_THEME" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null || true
 info "  gsettings updated"
+
+info "Setting default cursor theme for apps that ignore XCURSOR_THEME (Electron, Discord, etc.)..."
+mkdir -p "$HOME/.icons/default"
+cat > "$HOME/.icons/default/index.theme" <<EOF
+[Icon Theme]
+Name=Default
+Comment=Default Cursor Theme
+Inherits=$CURSOR_THEME
+EOF
+info "  ~/.icons/default/index.theme → Inherits=$CURSOR_THEME"
 
 # ---- 11. Configure SDDM theme ----
 info "Setting up SDDM theme..."
