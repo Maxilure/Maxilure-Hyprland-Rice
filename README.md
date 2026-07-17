@@ -5,7 +5,7 @@
 
 > **🚧 Theme migration in progress.**
 > This rice is moving away from Catppuccin Mocha to a Graphite dark aesthetic. Expect broad, breaking changes across configs and `install.sh` until this notice is removed. Checklist:
-> - [ ] Quickshell colors (`Colors.js` → theme-agnostic palette)
+> - [x] Quickshell colors (`Colors.js` → Graphite dark palette)
 > - [x] GTK3/4 theme → Adwaita-dark (system default)
 > - [x] Cursor theme → WhiteSur cursors
 > - [x] Kvantum theme → KvFlat
