@@ -9,7 +9,7 @@
 > - [x] GTK3/4 theme → Adwaita-dark (system default)
 > - [x] Cursor theme → WhiteSur cursors
 > - [x] Kvantum theme → KvFlat
-> - [ ] SDDM theme
+> - [x] SDDM theme → where-is-my-sddm-theme (classic, no cursor)
 > - [x] Kitty color scheme
 > - [x] Rofi color scheme (`rofi/config.rasi`)
 > - [x] `hypr/env.lua` cursor/GTK theme env vars
