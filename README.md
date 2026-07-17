@@ -36,7 +36,7 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | [Quickshell](https://quickshell.outfoxxed.me/) | Top bar, widgets, tray, notifications |
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
-| SDDM Theme | Catppuccin Mocha Pink |
+| SDDM Theme | [where-is-my-sddm-theme](https://github.com/stepanzubkov/where-is-my-sddm-theme) (classic, no cursor) |
 | GTK/Cursor | Adwaita-dark + WhiteSur cursors |
 | Kvantum | KvFlat |
 | Wallpapers | Bundled (curated from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha)) |
@@ -76,7 +76,7 @@ What the script does:
 4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,quickshell,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
 6. Copies bundled wallpapers to `~/Pictures/Wallpapers/`
-7. Applies Adwaita-dark GTK theme + WhiteSur cursor, KvFlat Kvantum theme, Catppuccin Mocha Pink SDDM theme
+7. Applies Adwaita-dark GTK theme + WhiteSur cursor, KvFlat Kvantum theme, where-is-my-sddm-theme (classic, no cursor)
 
 After install, log out and back in, or restart SDDM / Hyprland.
 
@@ -174,4 +174,4 @@ This rice uses a **Graphite dark** aesthetic — a monochrome, low-contrast dark
 - [Hyprland](https://hyprland.org/) — the Wayland compositor
 - [Quickshell](https://quickshell.outfoxxed.me/) — widget system (bar, tray, notifications)
 - [awww](https://codeberg.org/LGFae/awww) — wallpaper daemon
-- [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — wallpaper collection (pending replacement)
+- [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — current wallpaper source (pending replacement)

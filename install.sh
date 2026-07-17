@@ -122,7 +122,6 @@ fi
 echo "  [AUR packages]"
 aur_install whitesur-cursor-theme-git
 aur_install ttf-geist
-aur_install catppuccin-sddm-theme-mocha
 
 # ---- 5. Backup existing configs ----
 info "Backing up existing configs..."
@@ -190,13 +189,11 @@ gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null || true
 info "  GTK3/4 dark mode and WhiteSur cursor applied"
 
 # ---- 11. Configure SDDM theme ----
-info "Setting up SDDM theme..."
+info "Installing SDDM theme..."
+sudo cp -r "$SCRIPT_DIR/sddm/where_is_my_sddm_theme" /usr/share/sddm/themes/
 sudo mkdir -p /etc/sddm.conf.d
-sudo tee /etc/sddm.conf.d/theme.conf > /dev/null <<EOF
-[Theme]
-Current=catppuccin-mocha-pink
-EOF
-info "  SDDM theme set to catppuccin-mocha-pink"
+printf '[Theme]\nCurrent=where_is_my_sddm_theme\n' | sudo tee /etc/sddm.conf.d/theme.conf > /dev/null
+info "  SDDM theme → where_is_my_sddm_theme (classic, no cursor)"
 
 # ---- 12. Apply Kvantum theme ----
 info "Applying Kvantum theme..."
