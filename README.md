@@ -4,16 +4,16 @@
 > This is my personal dotfiles archive, shared as-is. The install script modifies packages, removes `paru`, overwrites config directories, and makes other changes specific to my setup. Review it before running. Use at your own risk.
 
 > **🚧 Theme migration in progress.**
-> This rice is moving away from Catppuccin Mocha to a different dark theme ([Graphite](https://github.com/vinceliuice/Graphite-gtk-theme)). Expect broad, breaking changes across configs and `install.sh` until this notice is removed. Checklist:
+> This rice is moving away from Catppuccin Mocha to a Graphite dark aesthetic. Expect broad, breaking changes across configs and `install.sh` until this notice is removed. Checklist:
 > - [ ] Quickshell colors (`Colors.js` → theme-agnostic palette)
-> - [x] GTK3/4 theme → Graphite (Dark)
-> - [x] Cursor theme → WhiteSur cursors (+ `~/.icons/default` fallback for Electron apps like Discord)
-> - [ ] Kvantum theme (on hold)
+> - [x] GTK3/4 theme → Adwaita-dark (system default)
+> - [x] Cursor theme → WhiteSur cursors
+> - [x] Kvantum theme → KvFlat
 > - [ ] SDDM theme
 > - [x] Kitty color scheme
 > - [ ] Rofi color scheme (`rofi/config.rasi`)
 > - [x] `hypr/env.lua` cursor/GTK theme env vars
-> - [x] `install.sh` package list (`catppuccin-*` → Graphite/WhiteSur equivalents)
+> - [x] `install.sh` package list
 > - [ ] Bundled wallpapers (currently from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha))
 > - [ ] README wording/screenshots below
 
@@ -37,8 +37,8 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
 | SDDM Theme | Catppuccin Mocha Pink |
-| GTK/Cursor | Graphite (Dark) + WhiteSur cursors |
-| Kvantum | Catppuccin Mocha Pink (pending migration) |
+| GTK/Cursor | Adwaita-dark + WhiteSur cursors |
+| Kvantum | KvFlat |
 | Wallpapers | Bundled (curated from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha)) |
 
 ## Keybinds
@@ -76,7 +76,7 @@ What the script does:
 4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,quickshell,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
 6. Copies bundled wallpapers to `~/Pictures/Wallpapers/`
-7. Applies Graphite GTK theme + WhiteSur cursor theme, Catppuccin Mocha Pink Kvantum/SDDM theme (Kvantum/SDDM migration pending)
+7. Applies Adwaita-dark GTK theme + WhiteSur cursor, KvFlat Kvantum theme, Catppuccin Mocha Pink SDDM theme
 
 After install, log out and back in, or restart SDDM / Hyprland.
 
@@ -84,7 +84,6 @@ Before using, add your monitors in `~/.config/hypr/monitors.lua` (it comes with 
 
 ### Post-install
 
-- **Kvantum (Qt apps, e.g. Dolphin):** Run `kvantummanager` and select `Catppuccin-Mocha-Pink` → Apply
 - **Tint:** Run `tint set-folder ~/Pictures/Wallpapers` to set up the wallpaper folder
 
 ## Usage
@@ -155,10 +154,10 @@ Make sure `dunst`, `mako`, or `swaync` are not running — they block Quickshell
 Run `tint set-folder ~/Pictures/Wallpapers` once to initialise the config.
 
 **Qt apps (Dolphin, etc.) not themed**
-Run `kvantummanager`, select `Catppuccin-Mocha-Pink`, and click Apply. Log out and back in if it doesn't take immediately.
+The install script sets KvFlat automatically via `kvantummanager`. If it didn't apply, run `kvantummanager --set KvFlat` manually.
 
 **Cursor wrong in some apps**
-Make sure `XCURSOR_THEME` and `XCURSOR_SIZE` are set in `~/.config/hypr/env.lua` (they are by default). Electron/Chromium apps (Discord, etc.) often ignore `XCURSOR_THEME` entirely and instead resolve the cursor via `~/.icons/default/index.theme` → `Inherits=` — the install script sets this up automatically. If a specific app still shows the wrong cursor, set `WLR_NO_HARDWARE_CURSORS=1` in env.lua as a workaround.
+Make sure `XCURSOR_THEME` and `XCURSOR_SIZE` are set in `~/.config/hypr/env.lua` (they are by default). If a specific app still shows the wrong cursor, set `WLR_NO_HARDWARE_CURSORS=1` in env.lua as a workaround.
 
 **`hypralt` not in PATH after install**
 The script installs it to `~/.local/bin/`. Make sure that's in your `PATH`:
@@ -168,12 +167,11 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 
 ## Theme
 
-This rice uses **Catppuccin Mocha** — a warm, low-contrast color palette. Check them out at [catppuccin.com](https://catppuccin.com/).
+This rice uses a **Graphite dark** aesthetic — a monochrome, low-contrast dark palette with neutral grays and subtle accents. GTK apps use Adwaita-dark, Qt apps use KvFlat.
 
 ## Credits
 
 - [Hyprland](https://hyprland.org/) — the Wayland compositor
-- [Catppuccin](https://github.com/catppuccin/catppuccin) — color palette
 - [Quickshell](https://quickshell.outfoxxed.me/) — widget system (bar, tray, notifications)
 - [awww](https://codeberg.org/LGFae/awww) — wallpaper daemon
-- [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — wallpaper collection
+- [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — wallpaper collection (pending replacement)

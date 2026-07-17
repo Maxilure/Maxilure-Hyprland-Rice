@@ -82,6 +82,8 @@ pacman_install rofimoji
 pacman_install wtype
 pacman_install python
 pacman_install dolphin
+pacman_install kvantum
+pacman_install gnome-themes-extra
 pacman_install brightnessctl
 pacman_install playerctl
 pacman_install wireplumber
@@ -118,9 +120,7 @@ else
 fi
 
 echo "  [AUR packages]"
-aur_install graphite-gtk-theme-black-git
 aur_install whitesur-cursor-theme-git
-aur_install kvantum-theme-catppuccin-git
 aur_install ttf-geist
 aur_install catppuccin-sddm-theme-mocha
 
@@ -168,55 +168,26 @@ else
     info "  Run 'tint random' to apply one!"
 fi
 
-# ---- 10. Configure GTK themes ----
-THEME="Graphite-Dark"
-CURSOR_THEME="WhiteSur-cursors"
-
-info "Writing GTK3 settings..."
+# ---- 10. Apply dark mode ----
+info "Applying dark mode and cursor..."
 mkdir -p "$HOME/.config/gtk-3.0"
 cat > "$HOME/.config/gtk-3.0/settings.ini" <<EOF
 [Settings]
-gtk-theme-name=$THEME
-gtk-cursor-theme-name=$CURSOR_THEME
-gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
+gtk-cursor-theme-name=WhiteSur-cursors
+gtk-cursor-theme-size=24
 EOF
-info "  ~/.config/gtk-3.0/settings.ini"
-
-info "Writing GTK4 settings..."
 mkdir -p "$HOME/.config/gtk-4.0"
 cat > "$HOME/.config/gtk-4.0/settings.ini" <<EOF
 [Settings]
-gtk-theme-name=$THEME
-gtk-cursor-theme-name=$CURSOR_THEME
-gtk-cursor-theme-size=24
 gtk-application-prefer-dark-theme=1
+gtk-cursor-theme-name=WhiteSur-cursors
+gtk-cursor-theme-size=24
 EOF
-info "  ~/.config/gtk-4.0/settings.ini"
-
-info "Setting up GTK4 theme symlinks..."
-rm -rf "$HOME/.config/gtk-4.0/assets" "$HOME/.config/gtk-4.0/gtk.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
-ln -sf "/usr/share/themes/$THEME/gtk-4.0/assets" "$HOME/.config/gtk-4.0/assets"
-ln -sf "/usr/share/themes/$THEME/gtk-4.0/gtk.css" "$HOME/.config/gtk-4.0/gtk.css"
-ln -sf "/usr/share/themes/$THEME/gtk-4.0/gtk-dark.css" "$HOME/.config/gtk-4.0/gtk-dark.css"
-info "  GTK4 symlinks set to $THEME"
-
-info "Applying gsettings..."
-gsettings set org.gnome.desktop.interface gtk-theme "$THEME" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark" 2>/dev/null || true
-gsettings set org.gnome.desktop.interface cursor-theme "$CURSOR_THEME" 2>/dev/null || true
+gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors" 2>/dev/null || true
 gsettings set org.gnome.desktop.interface cursor-size 24 2>/dev/null || true
-info "  gsettings updated"
-
-info "Setting default cursor theme for apps that ignore XCURSOR_THEME (Electron, Discord, etc.)..."
-mkdir -p "$HOME/.icons/default"
-cat > "$HOME/.icons/default/index.theme" <<EOF
-[Icon Theme]
-Name=Default
-Comment=Default Cursor Theme
-Inherits=$CURSOR_THEME
-EOF
-info "  ~/.icons/default/index.theme → Inherits=$CURSOR_THEME"
+info "  GTK3/4 dark mode and WhiteSur cursor applied"
 
 # ---- 11. Configure SDDM theme ----
 info "Setting up SDDM theme..."
@@ -227,12 +198,17 @@ Current=catppuccin-mocha-pink
 EOF
 info "  SDDM theme set to catppuccin-mocha-pink"
 
-# ---- 12. Done ----
+# ---- 12. Apply Kvantum theme ----
+info "Applying Kvantum theme..."
+if command -v kvantummanager &>/dev/null; then
+    kvantummanager --set KvFlat
+    info "  Kvantum theme set to KvFlat"
+else
+    warn "kvantummanager not found — install kvantum and re-run, or set theme manually"
+fi
+
+# ---- 13. Done ----
 echo
 info "Installation complete!"
 info "Log out and back in, or restart Hyprland to apply."
 info "If already in Hyprland, run: hyprctl reload"
-echo ""
-info "=== Post-install: Configure Kvantum for Qt apps (Dolphin, etc.) ==="
-info "  1. Run: kvantummanager"
-info "  2. Select 'Catppuccin-Mocha-Pink' → Apply"
