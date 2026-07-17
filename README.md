@@ -3,28 +3,16 @@
 > **⚠️ Personal config — not intended for public use.**
 > This is my personal dotfiles archive, shared as-is. The install script modifies packages, removes `paru`, overwrites config directories, and makes other changes specific to my setup. Review it before running. Use at your own risk.
 
-> **🚧 Theme migration in progress.**
-> This rice is moving away from Catppuccin Mocha to a Graphite dark aesthetic. Expect broad, breaking changes across configs and `install.sh` until this notice is removed. Checklist:
-> - [x] Quickshell colors (`Colors.js` → Graphite dark palette)
-> - [x] GTK3/4 theme → Adwaita-dark (system default)
-> - [x] Cursor theme → WhiteSur cursors
-> - [x] Kvantum theme → KvFlat
-> - [x] SDDM theme → where-is-my-sddm-theme (classic, no cursor)
-> - [x] Kitty color scheme
-> - [x] Rofi color scheme (`rofi/config.rasi`)
-> - [x] `hypr/env.lua` cursor/GTK theme env vars
-> - [x] `install.sh` package list
-> - [ ] Bundled wallpapers (currently from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha))
-> - [ ] README wording/screenshots below
+> **🚧 Migration nearly complete.**
+> Moved from Catppuccin Mocha to a Graphite dark aesthetic. Remaining:
+> - [ ] Bundled wallpapers (currently from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — pending replacement)
+> - [ ] Screenshots
 
-A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, functional workflow.
+A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a clean, minimal workflow built around a monochrome Graphite dark palette.
 
 ## Showcase
 
-![Desktop](screenshots/desktop.png)
-
-![Fastfetch](screenshots/fastfetch.png)
-
+> Screenshots pending — will be updated once wallpapers are replaced.
 
 ## What's Included
 
@@ -36,10 +24,10 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | [Quickshell](https://quickshell.outfoxxed.me/) | Top bar, widgets, tray, notifications |
 | [Tint](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/tint) | Wallpaper randomizer using `awww` |
 | [Hypralt](https://github.com/Maxilure/Maxilure-Hyprland-Rice/tree/main/scripts) | `ALT + TAB` window switcher (Python) |
-| SDDM Theme | [where-is-my-sddm-theme](https://github.com/stepanzubkov/where-is-my-sddm-theme) (classic, no cursor) |
-| GTK/Cursor | Adwaita-dark + WhiteSur cursors |
-| Kvantum | KvFlat |
-| Wallpapers | Bundled (curated from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha)) |
+| [where-is-my-sddm-theme](https://github.com/stepanzubkov/where-is-my-sddm-theme) | SDDM login screen (classic, no cursor) |
+| Adwaita-dark + [WhiteSur cursors](https://github.com/vinceliuice/WhiteSur-icon-theme) | GTK theme + cursor |
+| [KvFlat](https://github.com/tsujan/Kvantum) via Kvantum | Qt app theming |
+| Wallpapers | Bundled — pending replacement |
 
 ## Keybinds
 
@@ -76,7 +64,8 @@ What the script does:
 4. Deploys all configs to `~/.config/{kitty,fastfetch,rofi,quickshell,hypr}`
 5. Installs `hypralt` to `~/.local/bin/` and `tint` to `/usr/local/bin/`
 6. Copies bundled wallpapers to `~/Pictures/Wallpapers/`
-7. Applies Adwaita-dark GTK theme + WhiteSur cursor, KvFlat Kvantum theme, where-is-my-sddm-theme (classic, no cursor)
+7. Installs where-is-my-sddm-theme and activates it via `/etc/sddm.conf.d/theme.conf`
+8. Applies Adwaita-dark GTK theme, WhiteSur cursors, and KvFlat Kvantum theme
 
 After install, log out and back in, or restart SDDM / Hyprland.
 
@@ -167,11 +156,15 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 
 ## Theme
 
-This rice uses a **Graphite dark** aesthetic — a monochrome, low-contrast dark palette with neutral grays and subtle accents. GTK apps use Adwaita-dark, Qt apps use KvFlat.
+This rice uses a **Graphite dark** aesthetic — monochrome, low-contrast dark palette with neutral grays. No accent colors. GTK uses Adwaita-dark, Qt uses KvFlat via Kvantum, the login screen uses where-is-my-sddm-theme in classic no-cursor mode.
 
 ## Credits
 
-- [Hyprland](https://hyprland.org/) — the Wayland compositor
+- [Hyprland](https://hyprland.org/) — Wayland compositor
 - [Quickshell](https://quickshell.outfoxxed.me/) — widget system (bar, tray, notifications)
 - [awww](https://codeberg.org/LGFae/awww) — wallpaper daemon
-- [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — current wallpaper source (pending replacement)
+- [stepanzubkov/where-is-my-sddm-theme](https://github.com/stepanzubkov/where-is-my-sddm-theme) — SDDM login theme
+- [vinceliuice/WhiteSur-icon-theme](https://github.com/vinceliuice/WhiteSur-icon-theme) — cursor theme
+- [tsujan/Kvantum](https://github.com/tsujan/Kvantum) — Qt theming engine (KvFlat preset)
+- [davatorium/rofi](https://github.com/davatorium/rofi) — launcher / picker
+- [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha) — current bundled wallpapers (pending replacement)
