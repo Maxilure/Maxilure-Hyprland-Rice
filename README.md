@@ -11,7 +11,7 @@
 > - [x] Kvantum theme → KvFlat
 > - [ ] SDDM theme
 > - [x] Kitty color scheme
-> - [ ] Rofi color scheme (`rofi/config.rasi`)
+> - [x] Rofi color scheme (`rofi/config.rasi`)
 > - [x] `hypr/env.lua` cursor/GTK theme env vars
 > - [x] `install.sh` package list
 > - [ ] Bundled wallpapers (currently from [orangci/walls-catppuccin-mocha](https://github.com/orangci/walls-catppuccin-mocha))

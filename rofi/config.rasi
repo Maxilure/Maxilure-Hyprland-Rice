@@ -9,14 +9,14 @@ configuration {
 }
 
 * {
-    bg:       #1e1e2eE6;
-    bg-alt:   #181825;
-    surface:  #313244;
-    text:     #cdd6f4;
-    dim:      #a6adc8;
-    accent:   #cba6f7;
-    urgent:   #f38ba8;
-    border:   #6c7086;
+    bg:       #1A1A1AE6;
+    bg-alt:   #121212;
+    surface:  #2C2C2C;
+    text:     #D3D7CF;
+    dim:      #888888;
+    accent:   #D3D7CF;
+    urgent:   #CC0000;
+    border:   #555555;
 
     background:                 @bg;
     foreground:                 @text;
@@ -74,7 +74,7 @@ textbox-mode-badge {
     expand:           false;
     content:          "APPS";
     font:             "Geist Bold 9";
-    background-color: #cba6f71A;
+    background-color: #D3D7CF1A;
     text-color:       @accent;
     border:           1px;
     border-color:     @accent;
