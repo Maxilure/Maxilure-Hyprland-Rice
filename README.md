@@ -44,6 +44,8 @@ A personally curated [Hyprland](https://hyprland.org/) dotfiles setup with a cle
 | `SUPER + ALT + F` | Toggle fullscreen |
 | `Print` | Screenshot (area → clipboard + Swappy) |
 | `SUPER + Escape` | Kill stuck screenshot processes |
+| `ALT + CTRL + C` | Toggle auto-clicker (10 clicks/sec) |
+| `ALT + CTRL + V` | Toggle hold left click |
 
 See [binds.lua](hypr/binds.lua) for the full list.
 
@@ -123,6 +125,17 @@ Python-based window switcher. Cycles through windows on the focused monitor. If 
 ```bash
 pkill -f hypralt
 ```
+
+### Auto-clicker (`ALT + CTRL + C` / `ALT + CTRL + V`) — for fun
+
+Two modes, both using `ydotool`:
+
+- **`ALT + CTRL + C`** — rapid-fire left click at 10 clicks/sec. Toggle on/off.
+- **`ALT + CTRL + V`** — holds the left mouse button down until toggled off.
+
+The two modes are mutually exclusive — switching to one automatically releases the other. Requires `ydotool` to be installed and running (`ydotoold` daemon).
+
+Scripts live in [`scripts/`](scripts/).
 
 ### Screenshots (`Print`)
 
