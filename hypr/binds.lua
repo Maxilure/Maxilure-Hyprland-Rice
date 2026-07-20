@@ -34,7 +34,7 @@ hl.bind("ALT + TAB",  hl.dsp.exec_cmd("hypralt"))
 hl.bind(mainMod .. " + tab", hl.dsp.window.close())
 
 -- Float toggle
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 
 -- Clipboard history (cliphist + rofi)
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("~/.config/rofi/clipboard-picker.sh"))

@@ -38,7 +38,7 @@ hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "snap" })
 
 -- Windows — parent sets the curve with weight; children override for in/out.
 --   "fall" gives the window a sense of dropping into its tile.
-hl.animation({ leaf = "windows",    enabled = true, speed = 4,   bezier = "fall"   })
+hl.animation({ leaf = "windows",    enabled = true, speed = 5,   bezier = "snap"   })
 --   popin 78%: 22% of scale travel — dramatic enough to register, the snap
 --   curve makes it feel like it punches open rather than easing in.
 --   Slower speed so the curve has room to be visible.
