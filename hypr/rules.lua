@@ -25,18 +25,23 @@ hl.window_rule({
     no_focus = true,
 })
 
--- hyprland-run float rule
-hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
-
-    move  = "20 monitor_h-120",
-    float = true,
-})
-
 hl.layer_rule({
     name  = "blur-rofi",
     match = { namespace = "^rofi$" },
 
     blur        = true, 
 })
+
+hl.layer_rule({
+    name  = "blur-quickshell",
+    match = { namespace = "^quickshell$" },
+
+    blur         = true,
+    blur_popups  = true,
+    -- Blur follows the surface rect, not the drawn pixels; skip anything more
+    -- transparent than the panel background (C.base is 0.90 alpha) so fully
+    -- transparent regions — the toast strip, rounded-corner outsides, the gap
+    -- between bar and popup — stay unblurred.
+    ignore_alpha = 0.5,
+})
+

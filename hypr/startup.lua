@@ -15,4 +15,6 @@
    -- clipboard history (cliphist): watch text and images separately
    hl.exec_cmd("wl-paste --type text --watch cliphist store")
    hl.exec_cmd("wl-paste --type image --watch cliphist store")
+
+   hl.exec_cmd("gsr-ui launch-daemon")
  end)
